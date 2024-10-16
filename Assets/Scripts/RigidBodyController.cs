@@ -42,6 +42,7 @@ public class RigidBodyController : MonoBehaviour
     private Quaternion initialRotation;
     private string gravityDirection;
     private float process;
+    private bool isFalling = false;
 
     // checkpoint parameter
     public Vector3 respawnPoint;
@@ -60,6 +61,10 @@ public class RigidBodyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isFalling)
+        {
+            SlowMotionEffect();
+        }
         //Debug.Log(isRotating);
         if (isRotating)
         {
@@ -220,6 +225,12 @@ public class RigidBodyController : MonoBehaviour
         {
             moveDir = '6';
         }
+    }
+
+    void SlowMotionEffect()
+    {
+        Time.timeScale = 0.5f; 
+        Time.fixedDeltaTime = Time.timeScale * 0.02f; 
     }
 
     void CameraRotation(char keyPressed, string gravityDirection)
@@ -422,6 +433,11 @@ public class RigidBodyController : MonoBehaviour
 
         Vector3 MoveVector = transform.TransformDirection(PlayerMovementInput) * Speed;
         Debug.Log("MoveVector: " + MoveVector);
+        if (rb.velocity.y < 0 && !isFalling)
+        {
+            isFalling = true;
+            SlowMotionEffect();
+        }
         if (MoveVector.x != 0f)
         {
             rb.velocity = new Vector3(MoveVector.x, rb.velocity.y, rb.velocity.z);
@@ -440,6 +456,10 @@ public class RigidBodyController : MonoBehaviour
         if(other.tag=="Fall Detector")
         {
             transform.position = respawnPoint;
+            isFalling = false;
+            //back to normal time
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
         }
         if (other.tag == "Checkpoint")
         {
