@@ -60,7 +60,6 @@ public class RigidBodyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(isRotating);
         if (isRotating)
         {
             CameraRotation(keyPressed, gravityDirection);
@@ -102,9 +101,8 @@ public class RigidBodyController : MonoBehaviour
         // TODO: assign new value to gravityDirection should be done in keyPress W and S
         //       current assignment to gravityDirection is just for testing.
 
-        else if (Input.GetKeyDown(KeyCode.E) && (!isRotating))
+        else if (Input.GetKeyDown(KeyCode.E) && !isRotating)
         {
-            Debug.Log("E enter");
             isRotating = true;
             keyPressed = 'E';
             initialRotation = transform.rotation;
@@ -145,9 +143,8 @@ public class RigidBodyController : MonoBehaviour
                 }
 
             } 
-        } else if (Input.GetKeyDown(KeyCode.Q) && (!isRotating))
+        } else if (Input.GetKeyDown(KeyCode.Q) && !isRotating)
         {
-            Debug.Log("Q enter");
             isRotating = true;
             keyPressed = 'Q';
             initialRotation = transform.rotation;
@@ -235,7 +232,6 @@ public class RigidBodyController : MonoBehaviour
         {
             Debug.Log("entered gravity Y");
             process = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, step);
-            Debug.Log("initialAngle: " + transform.eulerAngles.y + "targetAngle: " + targetAngle + "process: " + process);
             transform.eulerAngles = new Vector3(0, process, 0);
         } else
         {

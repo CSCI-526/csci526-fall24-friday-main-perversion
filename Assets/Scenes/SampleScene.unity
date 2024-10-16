@@ -516,8 +516,6 @@ GameObject:
   - component: {fileID: 471773754}
   - component: {fileID: 471773753}
   - component: {fileID: 471773752}
-  - component: {fileID: 471773751}
-  - component: {fileID: 471773750}
   - component: {fileID: 471773757}
   - component: {fileID: 471773756}
   m_Layer: 0
@@ -527,46 +525,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &471773750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471773749}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e0a37b6d97b91f488fab31088bd13f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraIndex: 27
-  Speed: 5
---- !u!143 &471773751
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471773749}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: 1
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &471773752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -676,6 +634,7 @@ MonoBehaviour:
   IllusionZ: {fileID: 213949282}
   Speed: 5
   rb: {fileID: 471773757}
+  rotSpeed: 50
   respawnPoint: {x: 0, y: 0, z: 0}
 --- !u!54 &471773757
 Rigidbody:
@@ -778,7 +737,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558238175}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76b3c9e99f74a0d4384bda7a8e69fd96, type: 3}
   m_Name: 
@@ -791,6 +750,7 @@ MonoBehaviour:
   IllusionZ: {fileID: 0}
   Speed: 0
   rb: {fileID: 0}
+  rotSpeed: 0
   respawnPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &696622976
 GameObject:
