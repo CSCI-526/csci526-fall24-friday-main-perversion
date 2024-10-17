@@ -72,36 +72,22 @@ public class RigidBodyController : MonoBehaviour
             //return;
         }
 
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.S) && !isRotating)
         {
-            CameraZ.transform.Rotate(0,0,90);
-            CameraY.transform.Rotate(0,0,90);
-            CameraX.transform.Rotate(0,0,90);
-            if (cameraIndex == 'z')
-            {
-                gravity = z90Rot * gravity;
-            } else if (cameraIndex == 'y')
-            {
-                gravity = _y90Rot * gravity;
-            } else if (cameraIndex == 'x')
-            {
-                gravity = _x90Rot * gravity;
-            }
-        } else if (Input.GetKeyDown(KeyCode.W))
+            // Trigger slow-motion rotation for downward rotation (S key)
+            isRotating = true;
+            keyPressed = 'S';
+            initialRotation = transform.rotation;
+            targetAngle = transform.eulerAngles.x + 90f;
+            gravityDirection = "vertical_down";
+        } else if (Input.GetKeyDown(KeyCode.W) && !isRotating)
         {
-            CameraZ.transform.Rotate(0,0,-90);
-            CameraY.transform.Rotate(0,0,-90);
-            CameraX.transform.Rotate(0,0,-90);
-            if (cameraIndex == 'z')
-            {
-                gravity = _z90Rot * gravity;
-            } else if (cameraIndex == 'y')
-            {
-                gravity = y90Rot * gravity;
-            } else if (cameraIndex == 'x')
-            {
-                gravity = x90Rot * gravity;
-            }
+            // Trigger slow-motion rotation for upward rotation (W key)
+            isRotating = true;
+            keyPressed = 'W';
+            initialRotation = transform.rotation;
+            targetAngle = transform.eulerAngles.x - 90f;
+            gravityDirection = "vertical_up";
         } 
         
         // TODO: assign new value to gravityDirection should be done in keyPress W and S
@@ -236,22 +222,23 @@ public class RigidBodyController : MonoBehaviour
     void CameraRotation(char keyPressed, string gravityDirection)
     {
         float step = rotSpeed * Time.deltaTime;
-        //Debug.Log("initialAngle: " + transform.eulerAngles.x + "targetAngle: " + targetAngle + "process: " + process);
         if (gravityDirection == "x" || gravityDirection == "_x")
         {
-            Debug.Log("entered gravity X");
             process = Mathf.MoveTowardsAngle(transform.eulerAngles.x, targetAngle, step);
-            Debug.Log("initialAngle: " + transform.eulerAngles.y + "targetAngle: " + targetAngle + "process: " + process);
             transform.eulerAngles = new Vector3(process, 0, 0);
-        } else if (gravityDirection == "y" || gravityDirection == "_y")
+        }
+        else if (gravityDirection == "y" || gravityDirection == "_y")
         {
-            Debug.Log("entered gravity Y");
             process = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, step);
-            Debug.Log("initialAngle: " + transform.eulerAngles.y + "targetAngle: " + targetAngle + "process: " + process);
             transform.eulerAngles = new Vector3(0, process, 0);
-        } else
+        }
+        else if (gravityDirection == "vertical_up" || gravityDirection == "vertical_down")
         {
-            Debug.Log("entered gravity Z");
+            process = Mathf.MoveTowardsAngle(transform.eulerAngles.x, targetAngle, step);
+            transform.eulerAngles = new Vector3(process, transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+        else
+        {
             process = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, step);
             transform.eulerAngles = new Vector3(0, 0, process);
         }
@@ -266,7 +253,6 @@ public class RigidBodyController : MonoBehaviour
 
     void CameraSwitch(char keyPressed) 
     {
-        transform.rotation = initialRotation;
         targetAngle = 0f;
         if (keyPressed == 'E')
         {
