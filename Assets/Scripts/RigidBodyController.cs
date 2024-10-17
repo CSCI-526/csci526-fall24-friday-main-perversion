@@ -42,6 +42,7 @@ public class RigidBodyController : MonoBehaviour
     private Quaternion initialRotation;
     private string gravityDirection;
     private float process;
+    private Transform transformRotation;
 
     // checkpoint parameter
     public Vector3 respawnPoint;
@@ -63,38 +64,67 @@ public class RigidBodyController : MonoBehaviour
         //Debug.Log(isRotating);
         if (isRotating)
         {
-            CameraRotation(keyPressed, gravityDirection);
+            rb.isKinematic = true;
+            CameraRotation(keyPressed, gravityDirection, transformRotation);
             //return;
         }
 
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            CameraZ.transform.Rotate(0,0,90);
-            CameraY.transform.Rotate(0,0,90);
-            CameraX.transform.Rotate(0,0,90);
+            isRotating = true;
+            keyPressed = 'S';
+            // CameraZ.transform.Rotate(0,0,90);
+            // CameraY.transform.Rotate(0,0,90);
+            // CameraX.transform.Rotate(0,0,90);
             if (cameraIndex == 'z')
             {
+                targetAngle = CameraZ.transform.eulerAngles.z + 90f;
+                transformRotation = CameraZ.transform;
+                CameraY.transform.Rotate(0,0,90);
+                CameraX.transform.Rotate(0,0,90);
                 gravity = z90Rot * gravity;
             } else if (cameraIndex == 'y')
             {
+                targetAngle = CameraY.transform.eulerAngles.y - 90f;
+                transformRotation = CameraY.transform;
+                CameraZ.transform.Rotate(0,0,90);
+                CameraX.transform.Rotate(0,0,90);
                 gravity = _y90Rot * gravity;
             } else if (cameraIndex == 'x')
             {
+                targetAngle = CameraX.transform.eulerAngles.z + 90f;
+                transformRotation = CameraX.transform;
+                CameraY.transform.Rotate(0,0,90);
+                CameraZ.transform.Rotate(0,0,90);
                 gravity = _x90Rot * gravity;
             }
         } else if (Input.GetKeyDown(KeyCode.W))
         {
-            CameraZ.transform.Rotate(0,0,-90);
-            CameraY.transform.Rotate(0,0,-90);
-            CameraX.transform.Rotate(0,0,-90);
+            isRotating = true;
+            keyPressed = 'W';
+            // CameraZ.transform.Rotate(0,0,90);
+            // CameraY.transform.Rotate(0,0,90);
+            // CameraX.transform.Rotate(0,0,90);
             if (cameraIndex == 'z')
             {
+                targetAngle = CameraZ.transform.eulerAngles.z - 90f;
+                transformRotation = CameraZ.transform;
+                CameraY.transform.Rotate(0,0,-90);
+                CameraX.transform.Rotate(0,0,-90);
                 gravity = _z90Rot * gravity;
             } else if (cameraIndex == 'y')
             {
+                targetAngle = CameraY.transform.eulerAngles.y + 90f;
+                transformRotation = CameraY.transform;
+                CameraZ.transform.Rotate(0,0,-90);
+                CameraX.transform.Rotate(0,0,-90);
                 gravity = y90Rot * gravity;
             } else if (cameraIndex == 'x')
             {
+                targetAngle = CameraX.transform.eulerAngles.z - 90f;
+                transformRotation = CameraX.transform;
+                CameraY.transform.Rotate(0,0,-90);
+                CameraZ.transform.Rotate(0,0,-90);
                 gravity = x90Rot * gravity;
             }
         } 
@@ -108,6 +138,7 @@ public class RigidBodyController : MonoBehaviour
             isRotating = true;
             keyPressed = 'E';
             initialRotation = transform.rotation;
+            transformRotation = transform;
             if (cameraIndex == 'z')
             {
                 if ((int)gravity[1, 3] == -9)
@@ -151,6 +182,7 @@ public class RigidBodyController : MonoBehaviour
             isRotating = true;
             keyPressed = 'Q';
             initialRotation = transform.rotation;
+            transformRotation = transform;
             if (cameraIndex == 'z')
             {
                 if ((int)gravity[1, 3] == 9)
@@ -191,9 +223,10 @@ public class RigidBodyController : MonoBehaviour
         } else
         {
             MovePlayer();
+            Physics.gravity = new Vector3(gravity[0, 3], gravity[1, 3], gravity[2, 3]);
             return; 
         }
-        Physics.gravity = new Vector3(gravity[0, 3], gravity[1, 3], gravity[2, 3]);
+
         //Debug.Log("Gravity: " + (int)gravity[0, 3] + (int)gravity[1, 3] + (int)gravity[2, 3]);
 
         // If gravity or camera has been changed, check which move direction should be apply.
@@ -222,32 +255,50 @@ public class RigidBodyController : MonoBehaviour
         }
     }
 
-    void CameraRotation(char keyPressed, string gravityDirection)
+    void CameraRotation(char keyPressed, string gravityDirection, Transform transformRotation)
     {
         float step = rotSpeed * Time.deltaTime;
-        //Debug.Log("initialAngle: " + transform.eulerAngles.x + "targetAngle: " + targetAngle + "process: " + process);
-        if (gravityDirection == "x" || gravityDirection == "_x")
+        
+        // Rotation for Gravity Change
+        if (keyPressed == 'S' || keyPressed == 'W')
         {
-            Debug.Log("entered gravity X");
-            process = Mathf.MoveTowardsAngle(transform.eulerAngles.x, targetAngle, step);
-            Debug.Log("initialAngle: " + transform.eulerAngles.y + "targetAngle: " + targetAngle + "process: " + process);
-            transform.eulerAngles = new Vector3(process, 0, 0);
-        } else if (gravityDirection == "y" || gravityDirection == "_y")
+            if (cameraIndex == 'y')
+            {
+                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.y, targetAngle, step);
+                //Debug.Log("initialAngle: " + transformRotation.eulerAngles.z + "targetAngle: " + targetAngle + "process: " + process);
+                transformRotation.eulerAngles = new Vector3(transformRotation.eulerAngles.x, process, transformRotation.eulerAngles.z);
+            } else {
+                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.z, targetAngle, step);
+                //Debug.Log("initialAngle: " + transformRotation.eulerAngles.z + "targetAngle: " + targetAngle + "process: " + process);
+                transformRotation.eulerAngles = new Vector3(transformRotation.eulerAngles.x, transformRotation.eulerAngles.y, process);
+            }
+        } 
+        
+        // Rotation for Camera Switch
+        else if (keyPressed == 'E' || keyPressed == 'Q')
         {
-            Debug.Log("entered gravity Y");
-            process = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, step);
-            Debug.Log("initialAngle: " + transform.eulerAngles.y + "targetAngle: " + targetAngle + "process: " + process);
-            transform.eulerAngles = new Vector3(0, process, 0);
-        } else
-        {
-            Debug.Log("entered gravity Z");
-            process = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, step);
-            transform.eulerAngles = new Vector3(0, 0, process);
+            if (gravityDirection == "x" || gravityDirection == "_x")
+            {
+                Debug.Log("entered gravity X");
+                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.x, targetAngle, step);
+                transformRotation.eulerAngles = new Vector3(process, 0, 0);
+            } else if (gravityDirection == "y" || gravityDirection == "_y")
+            {
+                Debug.Log("entered gravity Y");
+                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.y, targetAngle, step);
+                transformRotation.eulerAngles = new Vector3(0, process, 0);
+            } else
+            {
+                Debug.Log("entered gravity Z");
+                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.z, targetAngle, step);
+                transformRotation.eulerAngles = new Vector3(0, 0, process);
+            }
         }
 
         if (Mathf.Approximately(process, targetAngle))
         {
             isRotating = false;
+            rb.isKinematic = false;
             CameraSwitch(keyPressed);
         }
 
@@ -421,7 +472,7 @@ public class RigidBodyController : MonoBehaviour
         }
 
         Vector3 MoveVector = transform.TransformDirection(PlayerMovementInput) * Speed;
-        Debug.Log("MoveVector: " + MoveVector);
+        //Debug.Log("MoveVector: " + MoveVector);
         if (MoveVector.x != 0f)
         {
             rb.velocity = new Vector3(MoveVector.x, rb.velocity.y, rb.velocity.z);
