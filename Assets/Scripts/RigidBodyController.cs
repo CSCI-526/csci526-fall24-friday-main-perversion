@@ -46,7 +46,9 @@ public class RigidBodyController : MonoBehaviour
 
     // checkpoint parameter
     public Vector3 respawnPoint;
-    
+    private char checkpointCameraIndex;
+    private Matrix4x4 checkpointGravity = new Matrix4x4();
+
     void Start()
     {
         gravity[0, 3] = 0; // x component
@@ -56,6 +58,8 @@ public class RigidBodyController : MonoBehaviour
         gravityDirection = "_y";
         moveDir = '3';
         respawnPoint = transform.position;
+        checkpointGravity = gravity;
+        checkpointCameraIndex = cameraIndex;
     }
 
     // Update is called once per frame
@@ -486,15 +490,68 @@ public class RigidBodyController : MonoBehaviour
         
     }
 
+    void RestoreCheckpointStates()
+    {
+        gravity = checkpointGravity; // Restore gravity state
+        cameraIndex = checkpointCameraIndex; // Restore camera state
+
+        // Set camera visibility based on restored camera index
+        CameraX.SetActive(cameraIndex == 'x');
+        CameraY.SetActive(cameraIndex == 'y');
+        CameraZ.SetActive(cameraIndex == 'z');
+
+        // Reset illusion objects to their states
+        IllusionX.SetActive(cameraIndex == 'x');
+        IllusionY.SetActive(cameraIndex == 'y');
+        IllusionZ.SetActive(cameraIndex == 'z');
+    }
+
+    private void RestoreCameraState()
+    {
+        CameraX.SetActive(cameraIndex == 'x');
+        CameraY.SetActive(cameraIndex == 'y');
+        CameraZ.SetActive(cameraIndex == 'z');
+
+        // Update illusion objects based on camera
+        IllusionX.SetActive(cameraIndex == 'x');
+        IllusionY.SetActive(cameraIndex == 'y');
+        IllusionZ.SetActive(cameraIndex == 'z');
+    }
+
+    private void UpdateCameraAndIllusions()
+    {
+        CameraX.SetActive(cameraIndex == 'x');
+        CameraY.SetActive(cameraIndex == 'y');
+        CameraZ.SetActive(cameraIndex == 'z');
+
+        IllusionX.SetActive(cameraIndex == 'x');
+        IllusionY.SetActive(cameraIndex == 'y');
+        IllusionZ.SetActive(cameraIndex == 'z');
+    }
+    private void Respawn()
+    {
+        // Move player to respawn point
+        transform.position = respawnPoint;
+
+        // Restore saved camera and gravity states
+        RestoreCheckpointStates();
+
+        // Reset rigid body velocity to prevent strange physics behavior
+        rb.velocity = Vector3.zero;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Fall Detector")
         {
-            transform.position = respawnPoint;
+            Respawn();  
+            // RestoreCameraAndIllusions(cameraIndex);
         }
         if (other.tag == "Checkpoint")
         {
             respawnPoint = other.transform.position;
+            checkpointCameraIndex = cameraIndex;
+            checkpointGravity = gravity;
         }
     }
 }
