@@ -7,6 +7,7 @@ public class LevelMenu : MonoBehaviour
 {
   public void OpenLevel(int levelId)
   {
+    Time.timeScale = 1; 
     string levelName = "Level" + levelId;
     SceneManager.LoadScene(levelName);
   }

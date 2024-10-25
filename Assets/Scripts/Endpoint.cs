@@ -24,6 +24,7 @@ public class NewBehaviourScript : MonoBehaviour
         if (distance<=0.25){
             GetComponent<Renderer>().material.color = Color.red;
             Screen.SetActive(true);
+            Time.timeScale = 0; // Pause the game
         }
     }
 }
