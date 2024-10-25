@@ -43,6 +43,7 @@ public class DistanceBasedRespawn : MonoBehaviour
                 GetComponent<Renderer>().material.color = Color.blue;
                 reached_once = true;
                 playerController.SetNewRespawnPoint();
+                Debug.Log("New respawn point set at: " + transform.position);
             }
         }
     }
