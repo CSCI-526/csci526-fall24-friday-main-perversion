@@ -18,7 +18,8 @@ public class RigidBodyController : MonoBehaviour
     [SerializeField] private float Speed;
     private char moveDir;
     private Vector3 PlayerMovementInput;
-    
+    private DistanceBasedRespawn respawn_checkpoint_script;
+
     // rigid body
     [SerializeField] private Rigidbody rb;
 
@@ -60,6 +61,11 @@ public class RigidBodyController : MonoBehaviour
         respawnPoint = transform.position;
         checkpointGravity = gravity;
         checkpointCameraIndex = cameraIndex;
+        GameObject checkpoint=GameObject.FindWithTag("Checkpoint");
+        if (checkpoint != null)
+        {
+            respawn_checkpoint_script = checkpoint.GetComponent<DistanceBasedRespawn>();
+        }
     }
 
     // Update is called once per frame
@@ -487,7 +493,6 @@ public class RigidBodyController : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, MoveVector.z);
         } 
-        
     }
 
     void RestoreCheckpointStates()
@@ -532,6 +537,10 @@ public class RigidBodyController : MonoBehaviour
     {
         // Move player to respawn point
         transform.position = respawnPoint;
+        if (respawn_checkpoint_script!=null&& respawn_checkpoint_script.HasReached())
+        {
+            transform.position = respawn_checkpoint_script.GetPosition();
+        }
 
         // Restore saved camera and gravity states
         RestoreCheckpointStates();
