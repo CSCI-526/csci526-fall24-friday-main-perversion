@@ -18,8 +18,7 @@ public class RigidBodyController : MonoBehaviour
     [SerializeField] private float Speed;
     private char moveDir;
     private Vector3 PlayerMovementInput;
-    private DistanceBasedRespawn respawn_checkpoint_script;
-
+    
     // rigid body
     [SerializeField] private Rigidbody rb;
 
@@ -47,9 +46,7 @@ public class RigidBodyController : MonoBehaviour
 
     // checkpoint parameter
     public Vector3 respawnPoint;
-    private char checkpointCameraIndex;
-    private Matrix4x4 checkpointGravity = new Matrix4x4();
-
+    
     void Start()
     {
         gravity[0, 3] = 0; // x component
@@ -59,13 +56,6 @@ public class RigidBodyController : MonoBehaviour
         gravityDirection = "_y";
         moveDir = '3';
         respawnPoint = transform.position;
-        checkpointGravity = gravity;
-        checkpointCameraIndex = cameraIndex;
-        GameObject checkpoint=GameObject.FindWithTag("Checkpoint");
-        if (checkpoint != null)
-        {
-            respawn_checkpoint_script = checkpoint.GetComponent<DistanceBasedRespawn>();
-        }
     }
 
     // Update is called once per frame
@@ -493,74 +483,18 @@ public class RigidBodyController : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, MoveVector.z);
         } 
-    }
-
-    void RestoreCheckpointStates()
-    {
-        gravity = checkpointGravity; // Restore gravity state
-        cameraIndex = checkpointCameraIndex; // Restore camera state
-
-        // Set camera visibility based on restored camera index
-        CameraX.SetActive(cameraIndex == 'x');
-        CameraY.SetActive(cameraIndex == 'y');
-        CameraZ.SetActive(cameraIndex == 'z');
-
-        // Reset illusion objects to their states
-        IllusionX.SetActive(cameraIndex == 'x');
-        IllusionY.SetActive(cameraIndex == 'y');
-        IllusionZ.SetActive(cameraIndex == 'z');
-    }
-
-    private void RestoreCameraState()
-    {
-        CameraX.SetActive(cameraIndex == 'x');
-        CameraY.SetActive(cameraIndex == 'y');
-        CameraZ.SetActive(cameraIndex == 'z');
-
-        // Update illusion objects based on camera
-        IllusionX.SetActive(cameraIndex == 'x');
-        IllusionY.SetActive(cameraIndex == 'y');
-        IllusionZ.SetActive(cameraIndex == 'z');
-    }
-
-    private void UpdateCameraAndIllusions()
-    {
-        CameraX.SetActive(cameraIndex == 'x');
-        CameraY.SetActive(cameraIndex == 'y');
-        CameraZ.SetActive(cameraIndex == 'z');
-
-        IllusionX.SetActive(cameraIndex == 'x');
-        IllusionY.SetActive(cameraIndex == 'y');
-        IllusionZ.SetActive(cameraIndex == 'z');
-    }
-    private void Respawn()
-    {
-        // Move player to respawn point
-        transform.position = respawnPoint;
-        if (respawn_checkpoint_script!=null&& respawn_checkpoint_script.HasReached())
-        {
-            transform.position = respawn_checkpoint_script.GetPosition();
-        }
-
-        // Restore saved camera and gravity states
-        RestoreCheckpointStates();
-
-        // Reset rigid body velocity to prevent strange physics behavior
-        rb.velocity = Vector3.zero;
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Fall Detector")
         {
-            Respawn();  
-            // RestoreCameraAndIllusions(cameraIndex);
+            transform.position = respawnPoint;
         }
         if (other.tag == "Checkpoint")
         {
             respawnPoint = other.transform.position;
-            checkpointCameraIndex = cameraIndex;
-            checkpointGravity = gravity;
         }
     }
 }
