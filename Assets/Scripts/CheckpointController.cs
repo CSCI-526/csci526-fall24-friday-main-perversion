@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class CheckpointController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Material color1;
-    public Image targetImage;
-    //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-    //Material sphereMaterial = sphere.GetComponent<Renderer>().material;
-    public bool checkpointReached;
+    private Vector3 currentRespawnPoint;
+    private RigidBodyController playerController;
+    private bool reached_once = false;
     void Start()
     {
-        
+        currentRespawnPoint = transform.position;
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Debug.Log("Find the player!");
+            playerController = player.GetComponent<RigidBodyController>();
+        }
     }
 
     // Update is called once per frame
@@ -24,11 +27,13 @@ public class CheckpointController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (!reached_once)
         {
-            GetComponent<Renderer>().material.color = Color.blue;
-            targetImage.color = Color.blue;
-            checkpointReached = true;
+            if (other.tag == "Player")
+            {
+                GetComponent<Renderer>().material.color = Color.blue;
+                playerController.SetNewRespawnPoint();
+            }
         }
     }
 }

@@ -1,6 +1,12 @@
 using System;
 using UnityEngine;
-
+[System.Serializable]
+public class TransformData
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 scale;
+}
 public class RigidBodyController : MonoBehaviour
 {
 
@@ -9,16 +15,22 @@ public class RigidBodyController : MonoBehaviour
     [SerializeField] private GameObject CameraY;
     [SerializeField] private GameObject CameraZ;
 
+     private Quaternion xRotation;
+    private Quaternion yRotation;
+    private Quaternion zRotation;
+    private char moveDirCheck;
+
     // Invisible obstacle objects
     [SerializeField] private GameObject IllusionX;
     [SerializeField] private GameObject IllusionY;
     [SerializeField] private GameObject IllusionZ;
 
+
     // movement parameter
     [SerializeField] private float Speed;
     private char moveDir;
     private Vector3 PlayerMovementInput;
-    private DistanceBasedRespawn respawn_checkpoint_script;
+    //private DistanceBasedRespawn respawn_checkpoint_script;
 
     // rigid body
     [SerializeField] private Rigidbody rb;
@@ -48,6 +60,10 @@ public class RigidBodyController : MonoBehaviour
     // checkpoint parameter
     public Vector3 respawnPoint;
     private char checkpointCameraIndex;
+
+
+
+
     private Matrix4x4 checkpointGravity = new Matrix4x4();
 
     void Start()
@@ -58,14 +74,15 @@ public class RigidBodyController : MonoBehaviour
         gravity[3, 3] = 1;
         gravityDirection = "_y";
         moveDir = '3';
+        moveDirCheck = moveDir;
         respawnPoint = transform.position;
         checkpointGravity = gravity;
         checkpointCameraIndex = cameraIndex;
-        GameObject checkpoint=GameObject.FindWithTag("Checkpoint");
-        if (checkpoint != null)
-        {
-            respawn_checkpoint_script = checkpoint.GetComponent<DistanceBasedRespawn>();
-        }
+
+
+        xRotation = CameraX.transform.rotation;
+        yRotation = CameraY.transform.rotation;
+        zRotation = CameraZ.transform.rotation;
     }
 
     // Update is called once per frame
@@ -495,24 +512,9 @@ public class RigidBodyController : MonoBehaviour
         } 
     }
 
-    void RestoreCheckpointStates()
+    private void RestoreCheckpointStates()
     {
-        gravity = checkpointGravity; // Restore gravity state
-        cameraIndex = checkpointCameraIndex; // Restore camera state
-
-        // Set camera visibility based on restored camera index
-        CameraX.SetActive(cameraIndex == 'x');
-        CameraY.SetActive(cameraIndex == 'y');
-        CameraZ.SetActive(cameraIndex == 'z');
-
-        // Reset illusion objects to their states
-        IllusionX.SetActive(cameraIndex == 'x');
-        IllusionY.SetActive(cameraIndex == 'y');
-        IllusionZ.SetActive(cameraIndex == 'z');
-    }
-
-    private void RestoreCameraState()
-    {
+        cameraIndex = checkpointCameraIndex;
         CameraX.SetActive(cameraIndex == 'x');
         CameraY.SetActive(cameraIndex == 'y');
         CameraZ.SetActive(cameraIndex == 'z');
@@ -521,6 +523,12 @@ public class RigidBodyController : MonoBehaviour
         IllusionX.SetActive(cameraIndex == 'x');
         IllusionY.SetActive(cameraIndex == 'y');
         IllusionZ.SetActive(cameraIndex == 'z');
+        moveDir=moveDirCheck;
+        gravity = checkpointGravity;
+        CameraX.transform.rotation=xRotation;
+        CameraY.transform.rotation=yRotation;
+        CameraZ.transform.rotation=zRotation;
+
     }
 
     private void UpdateCameraAndIllusions()
@@ -535,12 +543,14 @@ public class RigidBodyController : MonoBehaviour
     }
     private void Respawn()
     {
+        Debug.Log("New respawn");
         // Move player to respawn point
         transform.position = respawnPoint;
-        if (respawn_checkpoint_script!=null&& respawn_checkpoint_script.HasReached())
-        {
-            transform.position = respawn_checkpoint_script.GetPosition();
-        }
+        //if (respawn_checkpoint_script!=null&& respawn_checkpoint_script.HasReached())
+        //{
+
+        //    transform.position = respawn_checkpoint_script.GetPosition();
+        //}
 
         // Restore saved camera and gravity states
         RestoreCheckpointStates();
@@ -563,4 +573,20 @@ public class RigidBodyController : MonoBehaviour
             checkpointGravity = gravity;
         }
     }
+
+
+    public void SetNewRespawnPoint()
+    {
+        respawnPoint=transform.position;
+        checkpointCameraIndex = cameraIndex;
+        checkpointGravity = gravity;
+        xRotation = CameraX.transform.rotation;
+        yRotation = CameraY.transform.rotation;
+        zRotation = CameraZ.transform.rotation;
+        moveDirCheck = moveDir;
+        Debug.Log("CameraX: "+ cameraIndex);
+    }
+
+
+
 }
