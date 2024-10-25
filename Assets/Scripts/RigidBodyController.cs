@@ -61,8 +61,7 @@ public class RigidBodyController : MonoBehaviour
     public Vector3 respawnPoint;
     private char checkpointCameraIndex;
 
-
-
+    // analytics parameter
 
     private Matrix4x4 checkpointGravity = new Matrix4x4();
 
