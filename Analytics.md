@@ -30,6 +30,8 @@ void Update()
 
 ### Data Visualization:
 1. Users could see the time spent for completing this level after game success.
+
+! [TimeSpentAnalytics.png](TimeSpentAnalytics.png)
    
 2. Pass the data into RStudio to generate bar plots to see the trend.
 
