@@ -523,7 +523,7 @@ public class RigidBodyController : MonoBehaviour
         IllusionX.SetActive(cameraIndex == 'x');
         IllusionY.SetActive(cameraIndex == 'y');
         IllusionZ.SetActive(cameraIndex == 'z');
-        moveDir=moveDirCheck;
+        moveDir = moveDirCheck;
         gravity = checkpointGravity;
         CameraX.transform.rotation=xRotation;
         CameraY.transform.rotation=yRotation;
@@ -531,16 +531,16 @@ public class RigidBodyController : MonoBehaviour
 
     }
 
-    private void UpdateCameraAndIllusions()
-    {
-        CameraX.SetActive(cameraIndex == 'x');
-        CameraY.SetActive(cameraIndex == 'y');
-        CameraZ.SetActive(cameraIndex == 'z');
+    // private void UpdateCameraAndIllusions()
+    // {
+    //     CameraX.SetActive(cameraIndex == 'x');
+    //     CameraY.SetActive(cameraIndex == 'y');
+    //     CameraZ.SetActive(cameraIndex == 'z');
 
-        IllusionX.SetActive(cameraIndex == 'x');
-        IllusionY.SetActive(cameraIndex == 'y');
-        IllusionZ.SetActive(cameraIndex == 'z');
-    }
+    //     IllusionX.SetActive(cameraIndex == 'x');
+    //     IllusionY.SetActive(cameraIndex == 'y');
+    //     IllusionZ.SetActive(cameraIndex == 'z');
+    // }
     private void Respawn()
     {
         Debug.Log("New respawn");
@@ -571,6 +571,10 @@ public class RigidBodyController : MonoBehaviour
             respawnPoint = other.transform.position;
             checkpointCameraIndex = cameraIndex;
             checkpointGravity = gravity;
+            moveDirCheck = moveDir;
+            xRotation = CameraX.transform.rotation;
+            yRotation = CameraY.transform.rotation;
+            zRotation = CameraZ.transform.rotation;
         }
     }
 
