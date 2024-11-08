@@ -50,6 +50,8 @@ public class RigidBodyController : MonoBehaviour
     // rotation process parameter
     [SerializeField] float rotSpeed;
     private bool isRotating = false;
+    private bool gravityStat = true;
+    private bool perspectStat = true;
     private float targetAngle;
     private char keyPressed;
     private Quaternion initialRotation;
@@ -60,6 +62,8 @@ public class RigidBodyController : MonoBehaviour
     // checkpoint parameter
     public Vector3 respawnPoint;
     private char checkpointCameraIndex;
+    private bool gravityStatCheck;
+    private bool perspectStatCheck;
 
     // analytics parameter
 
@@ -77,6 +81,8 @@ public class RigidBodyController : MonoBehaviour
         respawnPoint = transform.position;
         checkpointGravity = gravity;
         checkpointCameraIndex = cameraIndex;
+        gravityStatCheck = gravityStat;
+        perspectStatCheck = perspectStat;
 
 
         xRotation = CameraX.transform.rotation;
@@ -95,157 +101,200 @@ public class RigidBodyController : MonoBehaviour
             //return;
         }
 
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.G))
         {
             isRotating = true;
-            keyPressed = 'S';
+            keyPressed = 'G';
             // CameraZ.transform.Rotate(0,0,90);
             // CameraY.transform.Rotate(0,0,90);
             // CameraX.transform.Rotate(0,0,90);
-            if (cameraIndex == 'z')
+            if (gravityStat) {
+                if (perspectStat)
+                {
+                    targetAngle = CameraZ.transform.eulerAngles.z + 90f;
+                    transformRotation = CameraZ.transform;
+                    // CameraY.transform.Rotate(0,0,90);
+                    // CameraX.transform.Rotate(0,0,90);
+                    gravity = z90Rot * gravity;
+                } else
+                {
+                    targetAngle = CameraX.transform.eulerAngles.z + 90f;
+                    transformRotation = CameraX.transform;
+                    // CameraY.transform.Rotate(0,0,90);
+                    // CameraZ.transform.Rotate(0,0,90);
+                    gravity = _x90Rot * gravity;                    
+                }
+                gravityStat = !gravityStat;                
+            } else 
             {
-                targetAngle = CameraZ.transform.eulerAngles.z + 90f;
-                transformRotation = CameraZ.transform;
-                CameraY.transform.Rotate(0,0,90);
-                CameraX.transform.Rotate(0,0,90);
-                gravity = z90Rot * gravity;
-            } else if (cameraIndex == 'y')
-            {
-                targetAngle = CameraY.transform.eulerAngles.y - 90f;
-                transformRotation = CameraY.transform;
-                CameraZ.transform.Rotate(0,0,90);
-                CameraX.transform.Rotate(0,0,90);
-                gravity = _y90Rot * gravity;
-            } else if (cameraIndex == 'x')
-            {
-                targetAngle = CameraX.transform.eulerAngles.z + 90f;
-                transformRotation = CameraX.transform;
-                CameraY.transform.Rotate(0,0,90);
-                CameraZ.transform.Rotate(0,0,90);
-                gravity = _x90Rot * gravity;
+                if (perspectStat)
+                {
+                    targetAngle = CameraZ.transform.eulerAngles.z - 90f;
+                    transformRotation = CameraZ.transform;
+                    // CameraY.transform.Rotate(0,0,-90);
+                    // CameraX.transform.Rotate(0,0,-90);
+                    gravity = _z90Rot * gravity;
+                } else
+                {
+                    targetAngle = CameraX.transform.eulerAngles.z - 90f;
+                    transformRotation = CameraX.transform;
+                    // CameraY.transform.Rotate(0,0,-90);
+                    // CameraZ.transform.Rotate(0,0,-90);
+                    gravity = x90Rot * gravity;                 
+                }       
+                gravityStat = !gravityStat;                     
             }
-        } else if (Input.GetKeyDown(KeyCode.W))
-        {
-            isRotating = true;
-            keyPressed = 'W';
-            // CameraZ.transform.Rotate(0,0,90);
-            // CameraY.transform.Rotate(0,0,90);
-            // CameraX.transform.Rotate(0,0,90);
-            if (cameraIndex == 'z')
-            {
-                targetAngle = CameraZ.transform.eulerAngles.z - 90f;
-                transformRotation = CameraZ.transform;
-                CameraY.transform.Rotate(0,0,-90);
-                CameraX.transform.Rotate(0,0,-90);
-                gravity = _z90Rot * gravity;
-            } else if (cameraIndex == 'y')
-            {
-                targetAngle = CameraY.transform.eulerAngles.y + 90f;
-                transformRotation = CameraY.transform;
-                CameraZ.transform.Rotate(0,0,-90);
-                CameraX.transform.Rotate(0,0,-90);
-                gravity = y90Rot * gravity;
-            } else if (cameraIndex == 'x')
-            {
-                targetAngle = CameraX.transform.eulerAngles.z - 90f;
-                transformRotation = CameraX.transform;
-                CameraY.transform.Rotate(0,0,-90);
-                CameraZ.transform.Rotate(0,0,-90);
-                gravity = x90Rot * gravity;
-            }
-        } 
+            // if (cameraIndex == 'z')
+            // {
+            //     targetAngle = CameraZ.transform.eulerAngles.z + 90f;
+            //     transformRotation = CameraZ.transform;
+            //     CameraY.transform.Rotate(0,0,90);
+            //     CameraX.transform.Rotate(0,0,90);
+            //     gravity = z90Rot * gravity;
+            // } else if (cameraIndex == 'y')
+            // {
+            //     targetAngle = CameraY.transform.eulerAngles.y - 90f;
+            //     transformRotation = CameraY.transform;
+            //     CameraZ.transform.Rotate(0,0,90);
+            //     CameraX.transform.Rotate(0,0,90);
+            //     gravity = _y90Rot * gravity;
+            // } else if (cameraIndex == 'x')
+            // {
+            //     targetAngle = CameraX.transform.eulerAngles.z + 90f;
+            //     transformRotation = CameraX.transform;
+            //     CameraY.transform.Rotate(0,0,90);
+            //     CameraZ.transform.Rotate(0,0,90);
+            //     gravity = _x90Rot * gravity;
+            // }
+        // } else if (Input.GetKeyDown(KeyCode.W))
+        // {
+        //     isRotating = true;
+        //     keyPressed = 'W';
+        //     // CameraZ.transform.Rotate(0,0,90);
+        //     // CameraY.transform.Rotate(0,0,90);
+        //     // CameraX.transform.Rotate(0,0,90);
+        //     if (cameraIndex == 'z')
+        //     {
+        //         targetAngle = CameraZ.transform.eulerAngles.z - 90f;
+        //         transformRotation = CameraZ.transform;
+        //         CameraY.transform.Rotate(0,0,-90);
+        //         CameraX.transform.Rotate(0,0,-90);
+        //         gravity = _z90Rot * gravity;
+        //     } else if (cameraIndex == 'y')
+        //     {
+        //         targetAngle = CameraY.transform.eulerAngles.y + 90f;
+        //         transformRotation = CameraY.transform;
+        //         CameraZ.transform.Rotate(0,0,-90);
+        //         CameraX.transform.Rotate(0,0,-90);
+        //         gravity = y90Rot * gravity;
+        //     } else if (cameraIndex == 'x')
+        //     {
+        //         targetAngle = CameraX.transform.eulerAngles.z - 90f;
+        //         transformRotation = CameraX.transform;
+        //         CameraY.transform.Rotate(0,0,-90);
+        //         CameraZ.transform.Rotate(0,0,-90);
+        //         gravity = x90Rot * gravity;
+        //     }
+        // } 
         
         // TODO: assign new value to gravityDirection should be done in keyPress W and S
         //       current assignment to gravityDirection is just for testing.
 
-        else if (Input.GetKeyDown(KeyCode.E) && (!isRotating))
+        } else if (Input.GetKeyDown(KeyCode.H) && gravityStat)
         {
-            Debug.Log("E enter");
+            Debug.Log("H enter");
             isRotating = true;
-            keyPressed = 'E';
+            keyPressed = 'H';
             initialRotation = transform.rotation;
             transformRotation = transform;
-            if (cameraIndex == 'z')
+            if (perspectStat)
             {
-                if ((int)gravity[1, 3] == -9)
-                {
-                    gravityDirection = "_y";
-                    targetAngle = transform.eulerAngles.y - 90f;
-                } else if ((int)gravity[0, 3] == 9)
-                {
-                    gravityDirection = "x";
-                    targetAngle = transform.eulerAngles.x + 90f;
-                }
-
-            } else if (cameraIndex == 'y')
+                targetAngle = transform.eulerAngles.y - 90f;
+            } else
             {
-                if ((int)gravity[2, 3] == -9)
-                {
-                    gravityDirection = "_z";
-                    targetAngle = transform.eulerAngles.z - 90f;                    
-                } else if ((int)gravity[0, 3] == -9)
-                {
-                    gravityDirection = "_x";
-                    targetAngle = transform.eulerAngles.x - 90f;
-                }
-                
-            } else if (cameraIndex == 'x')
-            {
-                if ((int)gravity[2, 3] == 9)
-                {
-                    gravityDirection = "z";
-                    targetAngle = transform.eulerAngles.z + 90f;  
-                } else if ((int)gravity[1, 3] == 9)
-                {
-                    gravityDirection = "y";
-                    targetAngle = transform.eulerAngles.y + 90f;  
-                }
-
-            } 
-        } else if (Input.GetKeyDown(KeyCode.Q) && (!isRotating))
-        {
-            Debug.Log("Q enter");
-            isRotating = true;
-            keyPressed = 'Q';
-            initialRotation = transform.rotation;
-            transformRotation = transform;
-            if (cameraIndex == 'z')
-            {
-                if ((int)gravity[1, 3] == 9)
-                {
-                    gravityDirection = "y";
-                    targetAngle = transform.eulerAngles.y - 90f;
-                } else if ((int)gravity[0, 3] == -9)
-                {
-                    gravityDirection = "x";
-                    targetAngle = transform.eulerAngles.x + 90f;
-                }
-
-            } else if (cameraIndex == 'y')
-            {
-                if ((int)gravity[2, 3] == 9)
-                {
-                    gravityDirection = "_z";
-                    targetAngle = transform.eulerAngles.z - 90f; 
-                } else if ((int)gravity[0, 3] == 9)
-                {
-                    gravityDirection = "_x";
-                    targetAngle = transform.eulerAngles.x - 90f;
-                }
-                
-            } else if (cameraIndex == 'x')
-            {
-                if ((int)gravity[2, 3] == -9)
-                {
-                    gravityDirection = "z";
-                    targetAngle = transform.eulerAngles.z + 90f; 
-                } else if ((int)gravity[1, 3] == -9)
-                {
-                    gravityDirection = "y";
-                    targetAngle = transform.eulerAngles.y + 90f; 
-                }
-
+                targetAngle = transform.eulerAngles.y + 90f;
             }
+            // if (cameraIndex == 'z')
+            // {
+            //     if ((int)gravity[1, 3] == -9)
+            //     {
+            //         gravityDirection = "_y";
+            //         targetAngle = transform.eulerAngles.y - 90f;
+            //     } else if ((int)gravity[0, 3] == 9)
+            //     {
+            //         gravityDirection = "x";
+            //         targetAngle = transform.eulerAngles.x + 90f;
+            //     }
+
+            // } else if (cameraIndex == 'y')
+            // {
+            //     if ((int)gravity[2, 3] == -9)
+            //     {
+            //         gravityDirection = "_z";
+            //         targetAngle = transform.eulerAngles.z - 90f;                    
+            //     } else if ((int)gravity[0, 3] == -9)
+            //     {
+            //         gravityDirection = "_x";
+            //         targetAngle = transform.eulerAngles.x - 90f;
+            //     }
+                
+            // } else if (cameraIndex == 'x')
+            // {
+            //     if ((int)gravity[2, 3] == 9)
+            //     {
+            //         gravityDirection = "z";
+            //         targetAngle = transform.eulerAngles.z + 90f;  
+            //     } else if ((int)gravity[1, 3] == 9)
+            //     {
+            //         gravityDirection = "y";
+            //         targetAngle = transform.eulerAngles.y + 90f;  
+            //     }
+
+            // } 
+        // } else if (Input.GetKeyDown(KeyCode.Q) && (!isRotating))
+        // {
+        //     Debug.Log("Q enter");
+        //     isRotating = true;
+        //     keyPressed = 'Q';
+        //     initialRotation = transform.rotation;
+        //     transformRotation = transform;
+        //     if (cameraIndex == 'z')
+        //     {
+        //         if ((int)gravity[1, 3] == 9)
+        //         {
+        //             gravityDirection = "y";
+        //             targetAngle = transform.eulerAngles.y - 90f;
+        //         } else if ((int)gravity[0, 3] == -9)
+        //         {
+        //             gravityDirection = "x";
+        //             targetAngle = transform.eulerAngles.x + 90f;
+        //         }
+
+        //     } else if (cameraIndex == 'y')
+        //     {
+        //         if ((int)gravity[2, 3] == 9)
+        //         {
+        //             gravityDirection = "_z";
+        //             targetAngle = transform.eulerAngles.z - 90f; 
+        //         } else if ((int)gravity[0, 3] == 9)
+        //         {
+        //             gravityDirection = "_x";
+        //             targetAngle = transform.eulerAngles.x - 90f;
+        //         }
+                
+        //     } else if (cameraIndex == 'x')
+        //     {
+        //         if ((int)gravity[2, 3] == -9)
+        //         {
+        //             gravityDirection = "z";
+        //             targetAngle = transform.eulerAngles.z + 90f; 
+        //         } else if ((int)gravity[1, 3] == -9)
+        //         {
+        //             gravityDirection = "y";
+        //             targetAngle = transform.eulerAngles.y + 90f; 
+        //         }
+
+        //     }
         } else
         {
             MovePlayer();
@@ -286,39 +335,39 @@ public class RigidBodyController : MonoBehaviour
         float step = rotSpeed * Time.deltaTime;
         
         // Rotation for Gravity Change
-        if (keyPressed == 'S' || keyPressed == 'W')
+        if (keyPressed == 'G')
         {
-            if (cameraIndex == 'y')
-            {
-                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.y, targetAngle, step);
-                //Debug.Log("initialAngle: " + transformRotation.eulerAngles.z + "targetAngle: " + targetAngle + "process: " + process);
-                transformRotation.eulerAngles = new Vector3(transformRotation.eulerAngles.x, process, transformRotation.eulerAngles.z);
-            } else {
-                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.z, targetAngle, step);
-                //Debug.Log("initialAngle: " + transformRotation.eulerAngles.z + "targetAngle: " + targetAngle + "process: " + process);
-                transformRotation.eulerAngles = new Vector3(transformRotation.eulerAngles.x, transformRotation.eulerAngles.y, process);
-            }
+            // if (cameraIndex == 'y')
+            // {
+            //     process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.y, targetAngle, step);
+            //     //Debug.Log("initialAngle: " + transformRotation.eulerAngles.z + "targetAngle: " + targetAngle + "process: " + process);
+            //     transformRotation.eulerAngles = new Vector3(transformRotation.eulerAngles.x, process, transformRotation.eulerAngles.z);
+            // } else {
+            process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.z, targetAngle, step);
+            //Debug.Log("initialAngle: " + transformRotation.eulerAngles.z + "targetAngle: " + targetAngle + "process: " + process);
+            transformRotation.eulerAngles = new Vector3(transformRotation.eulerAngles.x, transformRotation.eulerAngles.y, process);
+            // }
         } 
         
         // Rotation for Camera Switch
-        else if (keyPressed == 'E' || keyPressed == 'Q')
+        else if (keyPressed == 'H')
         {
-            if (gravityDirection == "x" || gravityDirection == "_x")
-            {
-                Debug.Log("entered gravity X");
-                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.x, targetAngle, step);
-                transformRotation.eulerAngles = new Vector3(process, 0, 0);
-            } else if (gravityDirection == "y" || gravityDirection == "_y")
-            {
-                Debug.Log("entered gravity Y");
-                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.y, targetAngle, step);
-                transformRotation.eulerAngles = new Vector3(0, process, 0);
-            } else
-            {
-                Debug.Log("entered gravity Z");
-                process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.z, targetAngle, step);
-                transformRotation.eulerAngles = new Vector3(0, 0, process);
-            }
+            // if (gravityDirection == "x" || gravityDirection == "_x")
+            // {
+            //     Debug.Log("entered gravity X");
+            //     process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.x, targetAngle, step);
+            //     transformRotation.eulerAngles = new Vector3(process, 0, 0);
+            // } else if (gravityDirection == "y" || gravityDirection == "_y")
+            // {
+            Debug.Log("entered gravity Y");
+            process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.y, targetAngle, step);
+            transformRotation.eulerAngles = new Vector3(0, process, 0);
+            // } else
+            // {
+            //     Debug.Log("entered gravity Z");
+            //     process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.z, targetAngle, step);
+            //     transformRotation.eulerAngles = new Vector3(0, 0, process);
+            // }
         }
 
         if (Mathf.Approximately(process, targetAngle))
@@ -334,144 +383,145 @@ public class RigidBodyController : MonoBehaviour
     {
         transform.rotation = initialRotation;
         targetAngle = 0f;
-        if (keyPressed == 'E')
+        if (keyPressed == 'H')
         {
-            if (cameraIndex == 'z')
+            if (perspectStat)
             {
-                if ((int)gravity[1, 3] == -9)
-                {
-                    CameraZ.SetActive(false);
-                    CameraX.SetActive(true);
-                    cameraIndex = 'x';
-                    CameraY.transform.Rotate(0,0,90);
-                    IllusionX.SetActive(true);
-                    IllusionY.SetActive(false);
-                    IllusionZ.SetActive(false);
-                } else if ((int)gravity[0, 3] == 9)
-                {
-                    CameraZ.SetActive(false);
-                    CameraY.SetActive(true);
-                    cameraIndex = 'y';
-                    CameraX.transform.Rotate(0,0,-90);
-                    IllusionY.SetActive(true);
-                    IllusionX.SetActive(false);
-                    IllusionZ.SetActive(false);
-                }
+                // if ((int)gravity[1, 3] == -9)
+                // {
+                CameraZ.SetActive(false);
+                CameraX.SetActive(true);
+                cameraIndex = 'x';
+                    // CameraY.transform.Rotate(0,0,90);
+                    // IllusionX.SetActive(true);
+                    // IllusionY.SetActive(false);
+                    // IllusionZ.SetActive(false);
+                // } else if ((int)gravity[0, 3] == 9)
+                // {
+                //     CameraZ.SetActive(false);
+                //     CameraY.SetActive(true);
+                //     cameraIndex = 'y';
+                //     CameraX.transform.Rotate(0,0,-90);
+                //     IllusionY.SetActive(true);
+                //     IllusionX.SetActive(false);
+                //     IllusionZ.SetActive(false);
+                // }
 
-            } else if (cameraIndex == 'y')
-            {
-                if ((int)gravity[2, 3] == -9)
-                {
-                    CameraY.SetActive(false);
-                    CameraX.SetActive(true);
-                    cameraIndex = 'x';
-                    CameraZ.transform.Rotate(0,0,-90);
-                    IllusionX.SetActive(true);
-                    IllusionZ.SetActive(false);
-                    IllusionY.SetActive(false);
-                } else if ((int)gravity[0, 3] == -9)
-                {
-                    CameraY.SetActive(false);
-                    CameraZ.SetActive(true);
-                    cameraIndex = 'z';
-                    CameraX.transform.Rotate(0,0,90);
-                    IllusionZ.SetActive(true);
-                    IllusionZ.SetActive(false);
-                    IllusionY.SetActive(false);
-                }
+            // } else if (cameraIndex == 'y')
+            // {
+            //     if ((int)gravity[2, 3] == -9)
+            //     {
+            //         CameraY.SetActive(false);
+            //         CameraX.SetActive(true);
+            //         cameraIndex = 'x';
+            //         CameraZ.transform.Rotate(0,0,-90);
+            //         IllusionX.SetActive(true);
+            //         IllusionZ.SetActive(false);
+            //         IllusionY.SetActive(false);
+            //     } else if ((int)gravity[0, 3] == -9)
+            //     {
+            //         CameraY.SetActive(false);
+            //         CameraZ.SetActive(true);
+            //         cameraIndex = 'z';
+            //         CameraX.transform.Rotate(0,0,90);
+            //         IllusionZ.SetActive(true);
+            //         IllusionZ.SetActive(false);
+            //         IllusionY.SetActive(false);
+            //     }
                 
-            } else if (cameraIndex == 'x')
+            // } else if (cameraIndex == 'x')
+            // {
+            //     if ((int)gravity[2, 3] == 9)
+            //     {
+            //         CameraX.SetActive(false);
+            //         CameraY.SetActive(true);
+            //         cameraIndex = 'y';
+            //         CameraZ.transform.Rotate(0,0,90);
+            //         IllusionY.SetActive(true);
+            //         IllusionZ.SetActive(false);
+            //         IllusionX.SetActive(false);
+            //     } else if ((int)gravity[1, 3] == 9)
+            //     {
+            //         CameraX.SetActive(false);
+            //         CameraZ.SetActive(true);
+            //         cameraIndex = 'z';
+            //         CameraY.transform.Rotate(0,0,-90);
+            //         IllusionZ.SetActive(true);
+            //         IllusionY.SetActive(false);
+            //         IllusionX.SetActive(false);
+            //     }
+
+            // }
+        // } else if (keyPressed == 'Q') 
+        // {
+        //     if (cameraIndex == 'z')
+        //     {
+        //         if ((int)gravity[1, 3] == 9)
+        //         {
+        //             CameraZ.SetActive(false);
+        //             CameraX.SetActive(true);
+        //             cameraIndex = 'x';
+        //             CameraY.transform.Rotate(0,0,90);
+        //             IllusionX.SetActive(true);
+        //             IllusionY.SetActive(false);
+        //             IllusionZ.SetActive(false);
+        //         } else if ((int)gravity[0, 3] == -9)
+        //         {
+        //             CameraZ.SetActive(false);
+        //             CameraY.SetActive(true);
+        //             cameraIndex = 'y';
+        //             CameraX.transform.Rotate(0,0,-90);
+        //             IllusionY.SetActive(true);
+        //             IllusionX.SetActive(false);
+        //             IllusionZ.SetActive(false);
+        //         }
+
+        //     } else if (cameraIndex == 'y')
+        //     {
+        //         if ((int)gravity[2, 3] == 9)
+        //         {
+        //             CameraY.SetActive(false);
+        //             CameraX.SetActive(true);
+        //             cameraIndex = 'x';
+        //             CameraZ.transform.Rotate(0,0,-90);
+        //             IllusionX.SetActive(true);
+        //             IllusionZ.SetActive(false);
+        //             IllusionY.SetActive(false);
+        //         } else if ((int)gravity[0, 3] == 9)
+        //         {
+        //             CameraY.SetActive(false);
+        //             CameraZ.SetActive(true);
+        //             cameraIndex = 'z';
+        //             CameraX.transform.Rotate(0,0,90);
+        //             IllusionZ.SetActive(true);
+        //             IllusionX.SetActive(false);
+        //             IllusionY.SetActive(false);
+        //         }
+                
+            } else //if (cameraIndex == 'x')
             {
-                if ((int)gravity[2, 3] == 9)
-                {
-                    CameraX.SetActive(false);
-                    CameraY.SetActive(true);
-                    cameraIndex = 'y';
-                    CameraZ.transform.Rotate(0,0,90);
-                    IllusionY.SetActive(true);
-                    IllusionZ.SetActive(false);
-                    IllusionX.SetActive(false);
-                } else if ((int)gravity[1, 3] == 9)
-                {
-                    CameraX.SetActive(false);
-                    CameraZ.SetActive(true);
-                    cameraIndex = 'z';
-                    CameraY.transform.Rotate(0,0,-90);
-                    IllusionZ.SetActive(true);
-                    IllusionY.SetActive(false);
-                    IllusionX.SetActive(false);
-                }
+                // if ((int)gravity[2, 3] == -9)
+                // {
+                //     CameraX.SetActive(false);
+                //     CameraY.SetActive(true);
+                //     cameraIndex = 'y';
+                //     CameraZ.transform.Rotate(0,0,90);
+                //     IllusionY.SetActive(true);
+                //     IllusionZ.SetActive(false);
+                //     IllusionX.SetActive(false);
+                // } else if ((int)gravity[1, 3] == -9)
+                // {
+                CameraX.SetActive(false);
+                CameraZ.SetActive(true);
+                cameraIndex = 'z';
+                    // CameraY.transform.Rotate(0,0,-90);
+                    // IllusionZ.SetActive(true);
+                    // IllusionY.SetActive(false);
+                    // IllusionX.SetActive(false);
+                // }
 
             }
-        } else if (keyPressed == 'Q') 
-        {
-            if (cameraIndex == 'z')
-            {
-                if ((int)gravity[1, 3] == 9)
-                {
-                    CameraZ.SetActive(false);
-                    CameraX.SetActive(true);
-                    cameraIndex = 'x';
-                    CameraY.transform.Rotate(0,0,90);
-                    IllusionX.SetActive(true);
-                    IllusionY.SetActive(false);
-                    IllusionZ.SetActive(false);
-                } else if ((int)gravity[0, 3] == -9)
-                {
-                    CameraZ.SetActive(false);
-                    CameraY.SetActive(true);
-                    cameraIndex = 'y';
-                    CameraX.transform.Rotate(0,0,-90);
-                    IllusionY.SetActive(true);
-                    IllusionX.SetActive(false);
-                    IllusionZ.SetActive(false);
-                }
-
-            } else if (cameraIndex == 'y')
-            {
-                if ((int)gravity[2, 3] == 9)
-                {
-                    CameraY.SetActive(false);
-                    CameraX.SetActive(true);
-                    cameraIndex = 'x';
-                    CameraZ.transform.Rotate(0,0,-90);
-                    IllusionX.SetActive(true);
-                    IllusionZ.SetActive(false);
-                    IllusionY.SetActive(false);
-                } else if ((int)gravity[0, 3] == 9)
-                {
-                    CameraY.SetActive(false);
-                    CameraZ.SetActive(true);
-                    cameraIndex = 'z';
-                    CameraX.transform.Rotate(0,0,90);
-                    IllusionZ.SetActive(true);
-                    IllusionX.SetActive(false);
-                    IllusionY.SetActive(false);
-                }
-                
-            } else if (cameraIndex == 'x')
-            {
-                if ((int)gravity[2, 3] == -9)
-                {
-                    CameraX.SetActive(false);
-                    CameraY.SetActive(true);
-                    cameraIndex = 'y';
-                    CameraZ.transform.Rotate(0,0,90);
-                    IllusionY.SetActive(true);
-                    IllusionZ.SetActive(false);
-                    IllusionX.SetActive(false);
-                } else if ((int)gravity[1, 3] == -9)
-                {
-                    CameraX.SetActive(false);
-                    CameraZ.SetActive(true);
-                    cameraIndex = 'z';
-                    CameraY.transform.Rotate(0,0,-90);
-                    IllusionZ.SetActive(true);
-                    IllusionY.SetActive(false);
-                    IllusionX.SetActive(false);
-                }
-
-            }
+            perspectStat = !perspectStat;
         }
     }
 
@@ -515,18 +565,20 @@ public class RigidBodyController : MonoBehaviour
     {
         cameraIndex = checkpointCameraIndex;
         CameraX.SetActive(cameraIndex == 'x');
-        CameraY.SetActive(cameraIndex == 'y');
+        // CameraY.SetActive(cameraIndex == 'y');
         CameraZ.SetActive(cameraIndex == 'z');
 
         // Update illusion objects based on camera
-        IllusionX.SetActive(cameraIndex == 'x');
-        IllusionY.SetActive(cameraIndex == 'y');
-        IllusionZ.SetActive(cameraIndex == 'z');
+        // IllusionX.SetActive(cameraIndex == 'x');
+        // IllusionY.SetActive(cameraIndex == 'y');
+        // IllusionZ.SetActive(cameraIndex == 'z');
         moveDir = moveDirCheck;
         gravity = checkpointGravity;
         CameraX.transform.rotation=xRotation;
-        CameraY.transform.rotation=yRotation;
+        // CameraY.transform.rotation=yRotation;
         CameraZ.transform.rotation=zRotation;
+        gravityStat = gravityStatCheck;
+        perspectStat = perspectStatCheck;
 
     }
 
@@ -572,8 +624,10 @@ public class RigidBodyController : MonoBehaviour
             checkpointGravity = gravity;
             moveDirCheck = moveDir;
             xRotation = CameraX.transform.rotation;
-            yRotation = CameraY.transform.rotation;
+            // yRotation = CameraY.transform.rotation;
             zRotation = CameraZ.transform.rotation;
+            gravityStatCheck = gravityStat;
+            perspectStatCheck = perspectStat;            
         }
     }
 
@@ -584,9 +638,11 @@ public class RigidBodyController : MonoBehaviour
         checkpointCameraIndex = cameraIndex;
         checkpointGravity = gravity;
         xRotation = CameraX.transform.rotation;
-        yRotation = CameraY.transform.rotation;
+        // yRotation = CameraY.transform.rotation;
         zRotation = CameraZ.transform.rotation;
         moveDirCheck = moveDir;
+        gravityStatCheck = gravityStat;
+        perspectStatCheck = perspectStat;        
         Debug.Log("CameraX: "+ cameraIndex);
     }
 
