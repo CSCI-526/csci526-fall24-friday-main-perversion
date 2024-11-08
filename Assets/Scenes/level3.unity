@@ -982,7 +982,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.18039216, g: 0.23529412, b: 0.27450982, a: 0}
+  m_BackGroundColor: {r: 0.32156864, g: 0.4392157, b: 0.52156866, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -4045,9 +4045,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraX: {fileID: 502170169}
   CameraZ: {fileID: 2101112858}
-  Speed: 5
+  Speed: 6
+  grounded: 0
+  groundedCheckDistance: 0
   rb: {fileID: 1490660892}
-  rotSpeed: 50
+  rotSpeed: 75
   respawnPoint: {x: 0, y: 0, z: 0}
 --- !u!54 &1490660892
 Rigidbody:
@@ -4156,7 +4158,7 @@ Transform:
   m_GameObject: {fileID: 1490660890}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5, y: -5, z: 0}
+  m_LocalPosition: {x: -4.5, y: -4.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5544,7 +5546,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.18039216, g: 0.23529412, b: 0.27450982, a: 0}
+  m_BackGroundColor: {r: 0.32156864, g: 0.4392157, b: 0.52156866, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
