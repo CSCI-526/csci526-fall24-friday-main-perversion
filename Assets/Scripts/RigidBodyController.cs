@@ -12,7 +12,7 @@ public class RigidBodyController : MonoBehaviour
 
     // Camera for 3 axis
     [SerializeField] private GameObject CameraX;
-    [SerializeField] private GameObject CameraY;
+    // [SerializeField] private GameObject CameraY;
     [SerializeField] private GameObject CameraZ;
 
      private Quaternion xRotation;
@@ -21,9 +21,9 @@ public class RigidBodyController : MonoBehaviour
     private char moveDirCheck;
 
     // Invisible obstacle objects
-    [SerializeField] private GameObject IllusionX;
-    [SerializeField] private GameObject IllusionY;
-    [SerializeField] private GameObject IllusionZ;
+    // [SerializeField] private GameObject IllusionX;
+    // [SerializeField] private GameObject IllusionY;
+    // [SerializeField] private GameObject IllusionZ;
 
 
     // movement parameter
@@ -86,7 +86,7 @@ public class RigidBodyController : MonoBehaviour
 
 
         xRotation = CameraX.transform.rotation;
-        yRotation = CameraY.transform.rotation;
+        //yRotation = CameraY.transform.rotation;
         zRotation = CameraZ.transform.rotation;
     }
 
