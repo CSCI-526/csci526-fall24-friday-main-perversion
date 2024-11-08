@@ -22,7 +22,8 @@ public class NewBehaviourScript : MonoBehaviour
         { "level1", "level2" },
         { "level2", "level3" },
         { "level3", "level4" },
-        { "level4", "level9" }
+        { "level4", "level5" },
+        { "level5", "level6" }
         // Add more levels as needed
     };
 
