@@ -335,9 +335,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &66037223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -432,9 +432,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &71167839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -529,9 +529,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &80658048
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,10 +662,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
+  m_IsKinematic: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &110491636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -760,9 +760,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &142967965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -857,9 +857,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &154566586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -954,9 +954,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &160147538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,9 +1084,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &180717401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1181,9 +1181,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &227636694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1278,9 +1278,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &279536502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,9 +1443,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &389554933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,9 +1580,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &441540630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1677,9 +1677,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &589555067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,9 +1827,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &632690060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1924,9 +1924,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &647461688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2021,9 +2021,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &683067200
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,7 +2163,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.18039216, g: 0.23529412, b: 0.27450982, a: 0}
+  m_BackGroundColor: {r: 0.32156864, g: 0.4392157, b: 0.52156866, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2313,9 +2313,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &795353029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,9 +2450,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &880811821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,9 +2693,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &904307656
 GameObject:
   m_ObjectHideFlags: 0
@@ -2858,9 +2858,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &941761970
 GameObject:
   m_ObjectHideFlags: 0
@@ -3093,9 +3093,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1010688552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3190,9 +3190,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1053596819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3287,9 +3287,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1062302836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3437,9 +3437,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1115412741
 GameObject:
   m_ObjectHideFlags: 0
@@ -3627,9 +3627,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1318778784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,9 +3777,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1366288999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3874,9 +3874,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1438091638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3971,9 +3971,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1444417681
 GameObject:
   m_ObjectHideFlags: 0
@@ -4105,9 +4105,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1495235011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4202,9 +4202,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1499227973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4299,9 +4299,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1504574956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4395,10 +4395,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
+  m_IsKinematic: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1534722424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4493,9 +4493,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1539448468
 GameObject:
   m_ObjectHideFlags: 0
@@ -4724,9 +4724,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1601862301
 GameObject:
   m_ObjectHideFlags: 0
@@ -4915,9 +4915,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &1673743537
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5012,9 +5012,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1674265363
 GameObject:
   m_ObjectHideFlags: 0
@@ -5112,6 +5112,7 @@ MonoBehaviour:
   Screen: {fileID: 279536502}
   endText: {fileID: 941761972}
   timer: 0
+  nextButton: {fileID: 0}
 --- !u!1001 &1737402929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5206,9 +5207,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1775837747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5244,7 +5245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraX: {fileID: 2140280806}
   CameraZ: {fileID: 694996506}
-  Speed: 5
+  Speed: 6
+  grounded: 0
+  groundedCheckDistance: 0
   rb: {fileID: 1775837749}
   rotSpeed: 75
   respawnPoint: {x: 0, y: 0, z: 0}
@@ -5355,7 +5358,7 @@ Transform:
   m_GameObject: {fileID: 1775837747}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 1, z: 0}
+  m_LocalPosition: {x: -7, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5457,9 +5460,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &1841052204
 GameObject:
   m_ObjectHideFlags: 0
@@ -5607,9 +5610,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1001 &2045213862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5704,9 +5707,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!1 &2119164940
 GameObject:
   m_ObjectHideFlags: 0
@@ -5796,7 +5799,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.18039216, g: 0.23529412, b: 0.27450982, a: 0}
+  m_BackGroundColor: {r: 0.32156864, g: 0.4392157, b: 0.52156866, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
