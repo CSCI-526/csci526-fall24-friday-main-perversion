@@ -31,6 +31,9 @@ public class RigidBodyController : MonoBehaviour
     private char moveDir;
     private Vector3 PlayerMovementInput;
     //private DistanceBasedRespawn respawn_checkpoint_script;
+    public bool grounded = false;
+    public float groundedCheckDistance;
+    private float bufferCheckDistance = 0.1f;
 
     // rigid body
     [SerializeField] private Rigidbody rb;
@@ -93,6 +96,17 @@ public class RigidBodyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // check if player is on ground
+        groundedCheckDistance = (GetComponent<BoxCollider>().bounds.extents.y) + bufferCheckDistance;
+
+        RaycastHit hit;
+        if (Physics.BoxCast(transform.position, transform.lossyScale / 2, -transform.up, out hit, transform.rotation, groundedCheckDistance))
+        {
+            grounded = true;
+        } else {
+            grounded = false;
+        }
+
         //Debug.Log(isRotating);
         if (isRotating)
         {
@@ -359,7 +373,7 @@ public class RigidBodyController : MonoBehaviour
             //     transformRotation.eulerAngles = new Vector3(process, 0, 0);
             // } else if (gravityDirection == "y" || gravityDirection == "_y")
             // {
-            Debug.Log("entered gravity Y");
+            //Debug.Log("entered gravity Y");
             process = Mathf.MoveTowardsAngle(transformRotation.eulerAngles.y, targetAngle, step);
             transformRotation.eulerAngles = new Vector3(0, process, 0);
             // } else
@@ -645,7 +659,5 @@ public class RigidBodyController : MonoBehaviour
         perspectStatCheck = perspectStat;        
         Debug.Log("CameraX: "+ cameraIndex);
     }
-
-
 
 }

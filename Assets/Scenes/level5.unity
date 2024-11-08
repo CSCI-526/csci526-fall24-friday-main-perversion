@@ -316,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2605249291871168508, guid: f8d40ff35a2d0f8449ab8a96173b32dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2605249291871168508, guid: f8d40ff35a2d0f8449ab8a96173b32dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1964,6 +1964,8 @@ MonoBehaviour:
   CameraX: {fileID: 1567552074}
   CameraZ: {fileID: 26632334}
   Speed: 5
+  grounded: 0
+  groundedCheckDistance: 0
   rb: {fileID: 994516405}
   rotSpeed: 50
   respawnPoint: {x: 0, y: 0, z: 0}
@@ -1993,7 +1995,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &994516406
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2402,8 +2404,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043058749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 4.5, y: -5, z: -7.5}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 4.5, y: -5, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2413,7 +2415,7 @@ Transform:
   - {fileID: 393606552}
   - {fileID: 1247949485}
   m_Father: {fileID: 2088795012}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 180}
 --- !u!1 &1097415103 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4895910053220654304, guid: 42f8fc1a70e20ff4e808325aef9ce9fd, type: 3}
@@ -3051,7 +3053,7 @@ Transform:
   m_GameObject: {fileID: 1378713672}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 4.5, y: 3.5, z: 4}
+  m_LocalPosition: {x: 4.5, y: 3.5, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
