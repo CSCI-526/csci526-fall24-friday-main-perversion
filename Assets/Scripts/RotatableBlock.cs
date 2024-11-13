@@ -16,11 +16,4 @@ public class RotatableBlock : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collider col)
-    {
-        if (col.tag == "Player") 
-        {
-            
-        }
-    }
 }
