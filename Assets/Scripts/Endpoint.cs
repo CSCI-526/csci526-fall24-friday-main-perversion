@@ -11,6 +11,8 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject Screen;
     public TMP_Text endText;
     public float timer;
+    private RigidBodyController rc;
+    //public int rotation_times;
 
     public Button nextButton;
 
@@ -38,6 +40,7 @@ public class NewBehaviourScript : MonoBehaviour
         nextButton.gameObject.SetActive(true);
 
         nextButton.onClick.AddListener(LoadNextLevel);
+        rc = FindObjectOfType<RigidBodyController>();
 
     }
 
@@ -56,12 +59,11 @@ public class NewBehaviourScript : MonoBehaviour
         {
             GetComponent<Renderer>().material.color = Color.red;
             Screen.SetActive(true);
-            endText.SetText("Success!" + "\n\n" + "Time Spent:" + '\n' + timer.ToString("0.00"));
+            int times_rotations=rc.get_statistic_rotation_time();
+            int times_respawn=rc.get_statistic_respawn_time();
+            endText.SetText("Success!" + "\n" + "Time:" +  timer.ToString("0.00")+"\nRotated: "+times_rotations+"\nRespawned: "+times_respawn);
             Time.timeScale = 0; // Pause the game
             levelCompleted = true;
-            DatabaseHelper databaseHelper = new DatabaseHelper();
-            double time_static = Convert.ToDouble(timer.ToString("0.00"));
-            databaseHelper.InsertData(0, time_static);
         }
         //Time.timeScale = 1;
 

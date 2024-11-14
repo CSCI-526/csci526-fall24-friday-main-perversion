@@ -19,6 +19,8 @@ public class RigidBodyController : MonoBehaviour
     private Quaternion yRotation;
     private Quaternion zRotation;
     private char moveDirCheck;
+    private int respawn_time=0;
+    private int rotation_times=0;
 
     // Invisible obstacle objects
     // [SerializeField] private GameObject IllusionX;
@@ -86,6 +88,8 @@ public class RigidBodyController : MonoBehaviour
         checkpointCameraIndex = cameraIndex;
         gravityStatCheck = gravityStat;
         perspectStatCheck = perspectStat;
+        rotation_times=0;
+        respawn_time=0;
 
 
         xRotation = CameraX.transform.rotation;
@@ -119,6 +123,7 @@ public class RigidBodyController : MonoBehaviour
         {
             isRotating = true;
             keyPressed = 'G';
+            rotation_times++;
             // CameraZ.transform.Rotate(0,0,90);
             // CameraY.transform.Rotate(0,0,90);
             // CameraX.transform.Rotate(0,0,90);
@@ -219,6 +224,7 @@ public class RigidBodyController : MonoBehaviour
             Debug.Log("H enter");
             isRotating = true;
             keyPressed = 'H';
+            rotation_times++;
             initialRotation = transform.rotation;
             transformRotation = transform;
             if (perspectStat)
@@ -609,6 +615,7 @@ public class RigidBodyController : MonoBehaviour
     private void Respawn()
     {
         Debug.Log("New respawn");
+        respawn_time++;
         // Move player to respawn point
         transform.position = respawnPoint;
         //if (respawn_checkpoint_script!=null&& respawn_checkpoint_script.HasReached())
@@ -658,6 +665,13 @@ public class RigidBodyController : MonoBehaviour
         gravityStatCheck = gravityStat;
         perspectStatCheck = perspectStat;        
         Debug.Log("CameraX: "+ cameraIndex);
+    }
+
+    public int get_statistic_respawn_time(){
+        return respawn_time;
+    }
+    public int get_statistic_rotation_time(){
+        return rotation_times;
     }
 
 }
