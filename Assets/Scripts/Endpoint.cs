@@ -59,6 +59,9 @@ public class NewBehaviourScript : MonoBehaviour
             endText.SetText("Success!" + "\n\n" + "Time Spent:" + '\n' + timer.ToString("0.00"));
             Time.timeScale = 0; // Pause the game
             levelCompleted = true;
+            DatabaseHelper databaseHelper = new DatabaseHelper();
+            double time_static = Convert.ToDouble(timer.ToString("0.00"));
+            databaseHelper.InsertData(0, time_static);
         }
         //Time.timeScale = 1;
 
