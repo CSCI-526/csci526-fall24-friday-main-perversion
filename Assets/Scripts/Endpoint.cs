@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -63,8 +64,11 @@ public class NewBehaviourScript : MonoBehaviour
             int times_rotations=rc.get_statistic_rotation_time();
             int times_respawn=rc.get_statistic_respawn_time();
             endText.SetText("Success!" + "\n" + "Time:" +  timer.ToString("0.00")+"\nRotated: "+times_rotations+"\nRespawned: "+times_respawn);
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            
             Time.timeScale = 0; // Pause the game
             levelCompleted = true;
+            LogDataToCSV(currentSceneName, timer, times_rotations, times_respawn, 1);
         }
         //Time.timeScale = 1;
 
@@ -87,6 +91,26 @@ public class NewBehaviourScript : MonoBehaviour
             Debug.LogWarning("No next level defined for this level!");
         }
     }
+
+
+
+    private void LogDataToCSV(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
+    {
+        string filePath = "C:/Users/vibha/game_data.csv";
+
+        // If the file does not exist, create it and add headers
+        if (!File.Exists(filePath))
+        {
+            string headers = "LevelName,TimeSpent,RotationCount,RespawnCount,Completion\n";
+            File.WriteAllText(filePath, headers);
+        }
+
+        // Append the current data as a new line
+        string newLine = $"{levelName},{timeSpent},{rotationCount},{respawnCount},{completion}\n";
+        File.AppendAllText(filePath, newLine);
+    }
+
+
 
     /*private IEnumerator LoadSceneAsync(string sceneName)
     {
