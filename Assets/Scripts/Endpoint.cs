@@ -52,7 +52,7 @@ public class NewBehaviourScript : MonoBehaviour
         // Debug.Log("target position: " + targetPosition);
         float distance = Vector3.Distance(currentPosition, targetPosition);
         // Debug.Log("distence: " + distance);
-        if (distance <= 0.25)
+        if (distance <= 0.5)
         {
             GetComponent<Renderer>().material.color = Color.red;
             Screen.SetActive(true);
