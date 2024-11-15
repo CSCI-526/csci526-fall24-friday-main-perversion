@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Networking;
+using System;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private bool levelCompleted = false; // Track if level is completed
     // Start is called before the first frame update
+    private string url = "https://script.google.com/macros/s/AKfycbwGbKlr_C5FoqfsDPhx6hpp5tEj-EhI9Y9xCUS4m8yufKQlX_J99nYRpuBbBmr2RPUxfg/exec";
 
     private Dictionary<string, string> levelProgression = new Dictionary<string, string>
     {
@@ -30,6 +33,27 @@ public class NewBehaviourScript : MonoBehaviour
         { "level6", "main"}
         // Add more levels as needed
     };
+
+
+
+    private class GameData
+    {
+        public string levelName;
+        public float timeSpent;
+        public int rotationCount;
+        public int respawnCount;
+        public int completion;
+
+        public GameData(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
+        {
+            this.levelName = levelName;
+            this.timeSpent = timeSpent;
+            this.rotationCount = rotationCount;
+            this.respawnCount = respawnCount;
+            this.completion = completion;
+        }
+    }
+
 
     void Start()
     {
@@ -68,7 +92,8 @@ public class NewBehaviourScript : MonoBehaviour
             
             Time.timeScale = 0; // Pause the game
             levelCompleted = true;
-            LogDataToCSV(currentSceneName, timer, times_rotations, times_respawn, 1);
+            //LogDataToCSV(currentSceneName, timer, times_rotations, times_respawn, 1);
+            StartCoroutine(LogDataToGoogleSheets(currentSceneName, timer, times_rotations, times_respawn, 1));
         }
         //Time.timeScale = 1;
 
@@ -110,6 +135,32 @@ public class NewBehaviourScript : MonoBehaviour
         File.AppendAllText(filePath, newLine);
     }
 
+
+    public IEnumerator LogDataToGoogleSheets(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
+    {
+        GameData gameData = new GameData(levelName, timeSpent, rotationCount, respawnCount, completion);
+        string jsonData = JsonUtility.ToJson(gameData);
+        Debug.Log("JSON data being sent: " + jsonData);
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Failed to log data: " + request.error);
+            }
+            else
+            {
+                Debug.Log("Data logged successfully to Google Sheets");
+            }
+        }
+    }
 
 
     /*private IEnumerator LoadSceneAsync(string sceneName)
