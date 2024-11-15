@@ -20,6 +20,7 @@ public class NewBehaviourScript : MonoBehaviour
     public Button nextButton;
 
     private bool levelCompleted = false; // Track if level is completed
+    private bool IsUpdatedOnce = false;
     // Start is called before the first frame update
     private string url = "https://script.google.com/macros/s/AKfycbwGbKlr_C5FoqfsDPhx6hpp5tEj-EhI9Y9xCUS4m8yufKQlX_J99nYRpuBbBmr2RPUxfg/exec";
 
@@ -92,8 +93,16 @@ public class NewBehaviourScript : MonoBehaviour
             
             Time.timeScale = 0; // Pause the game
             levelCompleted = true;
+
             //LogDataToCSV(currentSceneName, timer, times_rotations, times_respawn, 1);
-            StartCoroutine(LogDataToGoogleSheets(currentSceneName, timer, times_rotations, times_respawn, 1));
+            if (IsUpdatedOnce == false)
+            {
+                StartCoroutine(LogDataToGoogleSheets(currentSceneName, timer, times_rotations, times_respawn, 1));
+            }
+            if (levelCompleted == true)
+            {
+                IsUpdatedOnce = true;
+            }
         }
         //Time.timeScale = 1;
 
