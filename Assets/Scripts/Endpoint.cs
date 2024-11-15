@@ -147,10 +147,10 @@ public class NewBehaviourScript : MonoBehaviour
 
     public IEnumerator LogDataToGoogleSheets(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
     {
-        GameData gameData = new GameData(levelName, timeSpent, rotationCount, respawnCount, completion);
+        var gameData = new GameData(levelName, timeSpent, rotationCount, respawnCount, completion);
         string jsonData = JsonUtility.ToJson(gameData);
         Debug.Log("JSON data being sent: " + jsonData);
-        private string script_url="https://script.google.com/macros/s/AKfycbwuvVPaBtEXaCi8vSrNOlhVOVlDPs9Nkjon-hfrG8OYyf1OnsNomz3ArhFh9lH9DPU/exec";
+        string script_url="https://script.google.com/macros/s/AKfycbywebVuCfk-zLpkWfZJgmqqdnUfO7Y2uMKID-jAa3mAG8kb3m877Ejw1GN71FMgH3oI/exec";
         using (UnityWebRequest request = new UnityWebRequest(script_url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
@@ -160,7 +160,7 @@ public class NewBehaviourScript : MonoBehaviour
 
             request.SetRequestHeader("Access-Control-Allow-Origin", "*");
 
-            request.SetRequestHeader("Origin", "https://distr1ct9.github.io");
+            //request.SetRequestHeader("Origin", "https://distr1ct9.github.io");
 
             yield return request.SendWebRequest();
 
