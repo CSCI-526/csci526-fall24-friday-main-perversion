@@ -22,7 +22,7 @@ public class NewBehaviourScript : MonoBehaviour
     private bool levelCompleted = false; // Track if level is completed
     private bool IsUpdatedOnce = false;
     // Start is called before the first frame update
-    private string url = "https://script.google.com/macros/s/AKfycbwGbKlr_C5FoqfsDPhx6hpp5tEj-EhI9Y9xCUS4m8yufKQlX_J99nYRpuBbBmr2RPUxfg/exec";
+    private string url = "https://script.google.com/macros/s/AKfycbzUjlXfv8KkvwrKqnXOVOPc-D5qIvpJ_rC_U9eEMf2mJZJl0MFh1_c23xHCzdmHXG5fNg/exec";
 
     private Dictionary<string, string> levelProgression = new Dictionary<string, string>
     {
@@ -157,6 +157,7 @@ public class NewBehaviourScript : MonoBehaviour
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
+            //request.SetRequestHeader("Origin", "https://distr1ct9.github.io");
 
             yield return request.SendWebRequest();
 
