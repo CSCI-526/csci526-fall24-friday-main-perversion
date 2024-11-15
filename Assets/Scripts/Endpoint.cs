@@ -150,8 +150,8 @@ public class NewBehaviourScript : MonoBehaviour
         GameData gameData = new GameData(levelName, timeSpent, rotationCount, respawnCount, completion);
         string jsonData = JsonUtility.ToJson(gameData);
         Debug.Log("JSON data being sent: " + jsonData);
-
-        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        private string script_url="https://script.google.com/macros/s/AKfycbwuvVPaBtEXaCi8vSrNOlhVOVlDPs9Nkjon-hfrG8OYyf1OnsNomz3ArhFh9lH9DPU/exec";
+        using (UnityWebRequest request = new UnityWebRequest(script_url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
