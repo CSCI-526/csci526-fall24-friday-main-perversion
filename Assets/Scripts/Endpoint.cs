@@ -8,6 +8,7 @@ using System.IO;
 using UnityEngine.Networking;
 using System;
 
+
 public class NewBehaviourScript : MonoBehaviour
 {
     public GameObject targetObject;
@@ -22,7 +23,7 @@ public class NewBehaviourScript : MonoBehaviour
     private bool levelCompleted = false; // Track if level is completed
     private bool IsUpdatedOnce = false;
     // Start is called before the first frame update
-    private string url = "https://script.google.com/macros/s/AKfycbzUjlXfv8KkvwrKqnXOVOPc-D5qIvpJ_rC_U9eEMf2mJZJl0MFh1_c23xHCzdmHXG5fNg/exec";
+    private string appsScriptUrl = "https://script.google.com/macros/s/AKfycbxShQj97O_eUYA_p31ghexzewHlSeKxuT9iODVP1tW2sGtpl7u3xfj4t444zmSMdyiJ/exec";
 
     private Dictionary<string, string> levelProgression = new Dictionary<string, string>
     {
@@ -97,7 +98,7 @@ public class NewBehaviourScript : MonoBehaviour
             //LogDataToCSV(currentSceneName, timer, times_rotations, times_respawn, 1);
             if (IsUpdatedOnce == false)
             {
-                StartCoroutine(LogDataToGoogleSheets(currentSceneName, timer, times_rotations, times_respawn, 1));
+                StartCoroutine(SendGameData(currentSceneName, timer, times_rotations, times_respawn, 1));
             }
             if (levelCompleted == true)
             {
@@ -128,60 +129,47 @@ public class NewBehaviourScript : MonoBehaviour
 
 
 
-    private void LogDataToCSV(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
+    // private void LogDataToCSV(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
+    // {
+    //     string filePath = "C:/Users/vibha/game_data.csv";
+
+    //     // If the file does not exist, create it and add headers
+    //     if (!File.Exists(filePath))
+    //     {
+    //         string headers = "LevelName,TimeSpent,RotationCount,RespawnCount,Completion\n";
+    //         File.WriteAllText(filePath, headers);
+    //     }
+
+    //     // Append the current data as a new line
+    //     string newLine = $"{levelName},{timeSpent},{rotationCount},{respawnCount},{completion}\n";
+    //     File.AppendAllText(filePath, newLine);
+    // }
+
+
+    public IEnumerator SendGameData(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion) 
     {
-        string filePath = "C:/Users/vibha/game_data.csv";
-
-        // If the file does not exist, create it and add headers
-        if (!File.Exists(filePath))
+        // 构建URL参数
+        string url = $"{appsScriptUrl}?" +
+            $"levelName={UnityWebRequest.EscapeURL(levelName)}&" +
+            $"timeSpent={timeSpent}&" +
+            $"rotationCount={rotationCount}&" +
+            $"respawnCount={respawnCount}&" +
+            $"completion={completion}";
+            
+        var request = UnityWebRequest.Get(url);
+        
+        yield return request.SendWebRequest();
+        
+        if (request.result == UnityWebRequest.Result.Success) 
         {
-            string headers = "LevelName,TimeSpent,RotationCount,RespawnCount,Completion\n";
-            File.WriteAllText(filePath, headers);
+            Debug.Log($"Data sent successfully: {request.downloadHandler.text}");
         }
-
-        // Append the current data as a new line
-        string newLine = $"{levelName},{timeSpent},{rotationCount},{respawnCount},{completion}\n";
-        File.AppendAllText(filePath, newLine);
+        else 
+        {
+            Debug.LogError($"Error sending data: {request.error}");
+            Debug.LogError($"Response: {request.downloadHandler.text}");
+        }
+        
+        request.Dispose();
     }
-
-
-    public IEnumerator LogDataToGoogleSheets(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
-    {
-        var gameData = new GameData(levelName, timeSpent, rotationCount, respawnCount, completion);
-        string jsonData = JsonUtility.ToJson(gameData);
-        Debug.Log("JSON data being sent: " + jsonData);
-        string script_url="https://script.google.com/macros/s/AKfycbxybwbV-tjqKgwGeIpaC7eEKBk0vKo8Xkpatv6tQXAiVcPohOYPNEHf-RU1GTXtBgdI/exec";
-        using (UnityWebRequest request = new UnityWebRequest(script_url, "POST"))
-        {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-
-            request.SetRequestHeader("Access-Control-Allow-Origin", "*");
-
-            //request.SetRequestHeader("Origin", "https://distr1ct9.github.io");
-
-            yield return request.SendWebRequest();
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Failed to log data: " + request.error);
-            }
-            else
-            {
-                Debug.Log("Data logged successfully to Google Sheets");
-            }
-        }
-    }
-
-
-    /*private IEnumerator LoadSceneAsync(string sceneName)
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        while (!asyncLoad.isDone)
-        {
-            yield return null; // Wait until the scene is loaded
-        }
-    }*/
 }
