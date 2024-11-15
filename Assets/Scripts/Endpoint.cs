@@ -150,7 +150,7 @@ public class NewBehaviourScript : MonoBehaviour
         var gameData = new GameData(levelName, timeSpent, rotationCount, respawnCount, completion);
         string jsonData = JsonUtility.ToJson(gameData);
         Debug.Log("JSON data being sent: " + jsonData);
-        string script_url="https://script.google.com/macros/s/AKfycbywebVuCfk-zLpkWfZJgmqqdnUfO7Y2uMKID-jAa3mAG8kb3m877Ejw1GN71FMgH3oI/exec";
+        string script_url="https://script.google.com/macros/s/AKfycbxybwbV-tjqKgwGeIpaC7eEKBk0vKo8Xkpatv6tQXAiVcPohOYPNEHf-RU1GTXtBgdI/exec";
         using (UnityWebRequest request = new UnityWebRequest(script_url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
