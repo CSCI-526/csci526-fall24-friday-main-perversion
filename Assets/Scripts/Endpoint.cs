@@ -157,6 +157,9 @@ public class NewBehaviourScript : MonoBehaviour
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
+
+            request.SetRequestHeader("Access-Control-Allow-Origin", "*");
+
             request.SetRequestHeader("Origin", "https://distr1ct9.github.io");
 
             yield return request.SendWebRequest();
