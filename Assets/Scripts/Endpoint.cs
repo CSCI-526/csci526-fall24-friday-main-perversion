@@ -89,7 +89,7 @@ public class NewBehaviourScript : MonoBehaviour
             Screen.SetActive(true);
             int times_rotations=rc.get_statistic_rotation_time();
             int times_respawn=rc.get_statistic_respawn_time();
-            endText.SetText("Success!" + "\n" + "Time:" +  timer.ToString("0.00")+"\nRotated: "+times_rotations+"\nRespawned: "+times_respawn);
+            //endText.SetText("Success!");// + "\n" + "Time:" +  timer.ToString("0.00")+"\nRotated: "+times_rotations+"\nRespawned: "+times_respawn);
             string currentSceneName = SceneManager.GetActiveScene().name;
             
             Time.timeScale = 0; // Pause the game
