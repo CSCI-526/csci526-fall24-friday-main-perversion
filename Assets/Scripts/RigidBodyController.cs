@@ -17,8 +17,8 @@ public class RigidBodyController : MonoBehaviour
     // [SerializeField] private GameObject CameraY;
     [SerializeField] private GameObject CameraZ;
 
-    [SerializeField] private TMP_Text gtext;
-    [SerializeField] private TMP_Text htext;
+    // [SerializeField] private TMP_Text gtext;
+    // [SerializeField] private TMP_Text htext;
 
     private Quaternion xRotation;
     private Quaternion yRotation;
@@ -32,6 +32,13 @@ public class RigidBodyController : MonoBehaviour
     // [SerializeField] private GameObject IllusionY;
     // [SerializeField] private GameObject IllusionZ;
 
+    // Rotation instruction parameter
+    [SerializeField] private GameObject ShallowH;
+    [SerializeField] private GameObject KeyH;
+    [SerializeField] private GameObject ArrowUp;
+    [SerializeField] private GameObject ArrowDown;
+    [SerializeField] private GameObject ArrowLeft;
+    [SerializeField] private GameObject ArrowRight;
 
     // movement parameter
     [SerializeField] private float Speed;
@@ -68,8 +75,8 @@ public class RigidBodyController : MonoBehaviour
     private string gravityDirection;
     private float process;
     private Transform transformRotation;
-    private bool gpressed;
-    private bool hpresses;
+    // private bool gpressed;
+    // private bool hpresses;
 
     // checkpoint parameter
     public Vector3 respawnPoint;
@@ -97,15 +104,15 @@ public class RigidBodyController : MonoBehaviour
         perspectStatCheck = perspectStat;
         rotation_times=0;
         respawn_time=0;
-        gpressed = false;
-        hpresses = false;
+        // gpressed = false;
+        // hpresses = false;
 
 
         xRotation = CameraX.transform.rotation;
         //yRotation = CameraY.transform.rotation;
         zRotation = CameraZ.transform.rotation;
-        gtext.gameObject.SetActive(true);
-        gtext.gameObject.SetActive(true);
+        // gtext.gameObject.SetActive(true);
+        // gtext.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -122,6 +129,29 @@ public class RigidBodyController : MonoBehaviour
             grounded = false;
         }
 
+        if (gravityStat)
+        {
+            ArrowUp.SetActive(true);
+            ArrowDown.SetActive(false);
+            KeyH.SetActive(true);
+            ShallowH.SetActive(false);
+        } else {
+            ArrowUp.SetActive(false);
+            ArrowDown.SetActive(true);
+            KeyH.SetActive(false);
+            ShallowH.SetActive(true);
+
+        }
+
+        if (perspectStat)
+        {
+            ArrowRight.SetActive(true);
+            ArrowLeft.SetActive(false);
+        } else {
+            ArrowRight.SetActive(false);
+            ArrowLeft.SetActive(true);
+        }
+
         //Debug.Log(isRotating);
         if (isRotating)
         {
@@ -135,14 +165,14 @@ public class RigidBodyController : MonoBehaviour
             isRotating = true;
             keyPressed = 'G';
             rotation_times++;
-            gpressed=!gpressed;
-            if (gpressed&&hpresses) {
-                htext.gameObject.SetActive(false);
-            }
-            else
-            {
-                htext.gameObject.SetActive(true);
-            }
+            // gpressed=!gpressed;
+            // if (gpressed&&hpresses) {
+            //     htext.gameObject.SetActive(false);
+            // }
+            // else
+            // {
+            //     htext.gameObject.SetActive(true);
+            // }
             // CameraZ.transform.Rotate(0,0,90);
             // CameraY.transform.Rotate(0,0,90);
             // CameraX.transform.Rotate(0,0,90);
@@ -243,15 +273,15 @@ public class RigidBodyController : MonoBehaviour
             Debug.Log("H enter");
             isRotating = true;
             keyPressed = 'H';
-            hpresses = !hpresses;
-            if (gpressed && hpresses)
-            {
-                htext.gameObject.SetActive(false);
-            }
-            else
-            {
-                htext.gameObject.SetActive(true);
-            }
+            // hpresses = !hpresses;
+            // if (gpressed && hpresses)
+            // {
+            //     htext.gameObject.SetActive(false);
+            // }
+            // else
+            // {
+            //     htext.gameObject.SetActive(true);
+            // }
             rotation_times++;
             initialRotation = transform.rotation;
             transformRotation = transform;
