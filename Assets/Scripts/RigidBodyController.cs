@@ -88,6 +88,8 @@ public class RigidBodyController : MonoBehaviour
 
     private Matrix4x4 checkpointGravity = new Matrix4x4();
 
+    [SerializeField] private GameObject instructions;
+
     void Start()
     {
         gravity[0, 3] = 0; // x component
@@ -104,8 +106,7 @@ public class RigidBodyController : MonoBehaviour
         perspectStatCheck = perspectStat;
         rotation_times=0;
         respawn_time=0;
-        // gpressed = false;
-        // hpresses = false;
+        instructions.SetActive(false);
 
 
         xRotation = CameraX.transform.rotation;
@@ -129,6 +130,7 @@ public class RigidBodyController : MonoBehaviour
             grounded = false;
         }
 
+        // Update Rotation Arrow Indicator
         if (gravityStat)
         {
             ArrowUp.SetActive(true);
@@ -142,7 +144,6 @@ public class RigidBodyController : MonoBehaviour
             ShallowH.SetActive(true);
 
         }
-
         if (perspectStat)
         {
             ArrowRight.SetActive(true);
@@ -152,7 +153,12 @@ public class RigidBodyController : MonoBehaviour
             ArrowLeft.SetActive(true);
         }
 
-        //Debug.Log(isRotating);
+        // Check if respawn too many time, show instruction
+        if (respawn_time > 2)
+        {
+            instructions.SetActive(true);
+        }
+        // Check if rotating
         if (isRotating)
         {
             rb.isKinematic = true;
@@ -160,6 +166,7 @@ public class RigidBodyController : MonoBehaviour
             //return;
         }
 
+        // Check keypress
         else if (Input.GetKeyDown(KeyCode.G))
         {
             isRotating = true;
