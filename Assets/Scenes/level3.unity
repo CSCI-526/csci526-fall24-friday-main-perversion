@@ -3418,6 +3418,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2605249291871168508, guid: f8d40ff35a2d0f8449ab8a96173b32dd, type: 3}
   m_PrefabInstance: {fileID: 1394254192}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1411879443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411879444}
+  m_Layer: 0
+  m_Name: Instruction (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1411879444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411879443}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.499, y: 8.768, z: -0.51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1451472333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3756,6 +3787,7 @@ MonoBehaviour:
   rb: {fileID: 1490660892}
   rotSpeed: 60
   respawnPoint: {x: 0, y: 0, z: 0}
+  instructions: {fileID: 1411879443}
 --- !u!54 &1490660892
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6276,3 +6308,4 @@ SceneRoots:
   - {fileID: 1061285414}
   - {fileID: 1520042470}
   - {fileID: 5687415}
+  - {fileID: 1411879444}
