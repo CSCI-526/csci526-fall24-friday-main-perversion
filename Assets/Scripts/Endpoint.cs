@@ -8,21 +8,21 @@ using System.IO;
 using UnityEngine.Networking;
 using System;
 
-
 public class NewBehaviourScript : MonoBehaviour
 {
     public GameObject targetObject;
     public GameObject Screen;
     public TMP_Text endText;
+    public TMP_Text livesText; // Reference to the UI text for displaying lives
     public float timer;
     private RigidBodyController rc;
-    //public int rotation_times;
 
     public Button nextButton;
-
-    private bool levelCompleted = false; // Track if level is completed
+    private bool levelCompleted = false;
     private bool IsUpdatedOnce = false;
-    // Start is called before the first frame update
+
+    private int lives = 5; // Default lives count
+
     private Dictionary<string, string> levelProgression = new Dictionary<string, string>
     {
         { "level1", "level2" },
@@ -33,88 +33,97 @@ public class NewBehaviourScript : MonoBehaviour
         { "level6", "level7" },
         { "level7", "level8" },
         { "level8", "level9" },
-        { "level9", "main"}
-        // Add more levels as needed
+        { "level9", "main" }
     };
 
-
-
-    private class GameData
-    {
-        public string levelName;
-        public float timeSpent;
-        public int rotationCount;
-        public int respawnCount;
-        public int completion;
-
-        public GameData(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
-        {
-            this.levelName = levelName;
-            this.timeSpent = timeSpent;
-            this.rotationCount = rotationCount;
-            this.respawnCount = respawnCount;
-            this.completion = completion;
-        }
-    }
-
-
+    // Start is called before the first frame update
     void Start()
     {
         timer = 0.0f;
         Screen.SetActive(false);
-
         levelCompleted = false; // Reset the completion flag
         Time.timeScale = 1; // Ensure time scale is normal at the start of each level
-
         nextButton.gameObject.SetActive(true);
 
         nextButton.onClick.AddListener(LoadNextLevel);
         rc = FindObjectOfType<RigidBodyController>();
 
+        UpdateLivesText(); // Initialize the lives text on the screen
     }
 
     // Update is called once per frame
     void Update()
     {
         if (levelCompleted) return;
-        timer += Time.deltaTime;
-        Vector3 currentPosition = transform.position;
-        // Debug.Log("end position: " + currentPosition);
-        Vector3 targetPosition = targetObject.transform.position;
-        // Debug.Log("target position: " + targetPosition);
-        float distance = Vector3.Distance(currentPosition, targetPosition);
-        // Debug.Log("distence: " + distance);
-        if (distance <= 0.5)
-        {
-            GetComponent<Renderer>().material.color = Color.red;
-            Screen.SetActive(true);
-            int times_rotations=rc.get_statistic_rotation_time();
-            int times_respawn=rc.get_statistic_respawn_time();
-            endText.SetText("Success!" + "\n" + "Time:" +  timer.ToString("0.00"));
-            string currentSceneName = SceneManager.GetActiveScene().name;
-            
-            Time.timeScale = 0; // Pause the game
-            levelCompleted = true;
-            float te=rc.get_timer();
 
-            //LogDataToCSV(currentSceneName, timer, times_rotations, times_respawn, 1);
-            if (IsUpdatedOnce == false)
+        timer += Time.deltaTime;
+        int times_respawn = rc.get_statistic_respawn_time();
+
+        if (times_respawn >= 5 && !levelCompleted)
+        {
+            HandleLevelEnd(false); // Trigger failure
+            return;
+        }
+
+        // Check distance to the target object
+        Vector3 currentPosition = transform.position;
+        Vector3 targetPosition = targetObject.transform.position;
+        float distance = Vector3.Distance(currentPosition, targetPosition);
+
+        if (distance <= 0.5 && !levelCompleted)
+        {
+            HandleLevelEnd(true); // Trigger success
+        }
+    }
+
+    // Method to handle level end logic
+    private void HandleLevelEnd(bool isSuccess)
+    {
+        levelCompleted = true;
+        Time.timeScale = 0; // Pause the game
+        Screen.SetActive(true);
+
+        int times_rotations = rc.get_statistic_rotation_time();
+        int times_respawn = rc.get_statistic_respawn_time();
+        float te = rc.get_timer();
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (isSuccess)
+        {
+            endText.SetText("Success!" + "\n" + "Time:" + timer.ToString("0.00"));
+            if (!IsUpdatedOnce)
             {
                 StartCoroutine(SendGameData(currentSceneName, te, times_rotations, times_respawn, 1));
-            }
-            if (levelCompleted == true)
-            {
                 IsUpdatedOnce = true;
             }
         }
-        //Time.timeScale = 1;
-
+        else
+        {
+            endText.SetText("Failure!" + "\n" + "Time:" + timer.ToString("0.00"));
+            if (!IsUpdatedOnce)
+            {
+                StartCoroutine(SendGameData(currentSceneName, te, times_rotations, times_respawn, 0));
+                IsUpdatedOnce = true;
+            }
+        }
     }
-    public static void sendFail(){
-        //int times_rotations=rc.get_statistic_rotation_time();
-        //int times_respawn=rc.get_statistic_respawn_time();
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SendGameData(currentSceneName, 0, 0, 0, 0);
+
+    // Method to update the lives display on the screen
+    private void UpdateLivesText()
+    {
+        livesText.SetText("Lives: " + lives.ToString());
+    }
+
+    // Method to decrement lives and check if game over
+    public void DecrementLives()
+    {
+        lives--; // Decrease life count
+        UpdateLivesText(); // Update the lives display
+
+        if (lives <= 0)
+        {
+            HandleLevelEnd(false); // Trigger failure when lives reach 0
+        }
     }
 
     public void LoadNextLevel()
@@ -126,7 +135,6 @@ public class NewBehaviourScript : MonoBehaviour
         if (levelProgression.ContainsKey(currentSceneName))
         {
             string nextSceneName = levelProgression[currentSceneName];
-            //StartCoroutine(LoadSceneAsync(nextSceneName));
             SceneManager.LoadScene(nextSceneName);
         }
         else
@@ -135,28 +143,9 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-
-
-    // private void LogDataToCSV(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
-    // {
-    //     string filePath = "C:/Users/vibha/game_data.csv";
-
-    //     // If the file does not exist, create it and add headers
-    //     if (!File.Exists(filePath))
-    //     {
-    //         string headers = "LevelName,TimeSpent,RotationCount,RespawnCount,Completion\n";
-    //         File.WriteAllText(filePath, headers);
-    //     }
-
-    //     // Append the current data as a new line
-    //     string newLine = $"{levelName},{timeSpent},{rotationCount},{respawnCount},{completion}\n";
-    //     File.AppendAllText(filePath, newLine);
-    // }
-
-
-    public static IEnumerator SendGameData(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion) 
+    // Static method to send game data to a server or other external destination
+    public static IEnumerator SendGameData(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion)
     {
-        // 构建URL参数
         string appsScriptUrl = "https://script.google.com/macros/s/AKfycbxShQj97O_eUYA_p31ghexzewHlSeKxuT9iODVP1tW2sGtpl7u3xfj4t444zmSMdyiJ/exec";
 
         string url = $"{appsScriptUrl}?" +
@@ -165,21 +154,21 @@ public class NewBehaviourScript : MonoBehaviour
             $"rotationCount={rotationCount}&" +
             $"respawnCount={respawnCount}&" +
             $"completion={completion}";
-            
+
         var request = UnityWebRequest.Get(url);
-        
+
         yield return request.SendWebRequest();
-        
-        if (request.result == UnityWebRequest.Result.Success) 
+
+        if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log($"Data sent successfully: {request.downloadHandler.text}");
         }
-        else 
+        else
         {
             Debug.LogError($"Error sending data: {request.error}");
             Debug.LogError($"Response: {request.downloadHandler.text}");
         }
-        
+
         request.Dispose();
     }
 }
