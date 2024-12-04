@@ -23,8 +23,6 @@ public class NewBehaviourScript : MonoBehaviour
     private bool levelCompleted = false; // Track if level is completed
     private bool IsUpdatedOnce = false;
     // Start is called before the first frame update
-    private string appsScriptUrl = "https://script.google.com/macros/s/AKfycbxShQj97O_eUYA_p31ghexzewHlSeKxuT9iODVP1tW2sGtpl7u3xfj4t444zmSMdyiJ/exec";
-
     private Dictionary<string, string> levelProgression = new Dictionary<string, string>
     {
         { "level1", "level2" },
@@ -97,11 +95,12 @@ public class NewBehaviourScript : MonoBehaviour
             
             Time.timeScale = 0; // Pause the game
             levelCompleted = true;
+            float te=rc.get_timer();
 
             //LogDataToCSV(currentSceneName, timer, times_rotations, times_respawn, 1);
             if (IsUpdatedOnce == false)
             {
-                StartCoroutine(SendGameData(currentSceneName, timer, times_rotations, times_respawn, 1));
+                StartCoroutine(SendGameData(currentSceneName, te, times_rotations, times_respawn, 1));
             }
             if (levelCompleted == true)
             {
@@ -110,6 +109,12 @@ public class NewBehaviourScript : MonoBehaviour
         }
         //Time.timeScale = 1;
 
+    }
+    public static void sendFail(){
+        //int times_rotations=rc.get_statistic_rotation_time();
+        //int times_respawn=rc.get_statistic_respawn_time();
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SendGameData(currentSceneName, 0, 0, 0, 0);
     }
 
     public void LoadNextLevel()
@@ -149,9 +154,11 @@ public class NewBehaviourScript : MonoBehaviour
     // }
 
 
-    public IEnumerator SendGameData(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion) 
+    public static IEnumerator SendGameData(string levelName, float timeSpent, int rotationCount, int respawnCount, int completion) 
     {
         // 构建URL参数
+        string appsScriptUrl = "https://script.google.com/macros/s/AKfycbxShQj97O_eUYA_p31ghexzewHlSeKxuT9iODVP1tW2sGtpl7u3xfj4t444zmSMdyiJ/exec";
+
         string url = $"{appsScriptUrl}?" +
             $"levelName={UnityWebRequest.EscapeURL(levelName)}&" +
             $"timeSpent={timeSpent}&" +

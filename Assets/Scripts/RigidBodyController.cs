@@ -27,6 +27,8 @@ public class RigidBodyController : MonoBehaviour
     private int respawn_time=0;
     private int rotation_times=0;
 
+    private float timer=0;
+
     // Invisible obstacle objects
     // [SerializeField] private GameObject IllusionX;
     // [SerializeField] private GameObject IllusionY;
@@ -112,6 +114,7 @@ public class RigidBodyController : MonoBehaviour
         xRotation = CameraX.transform.rotation;
         //yRotation = CameraY.transform.rotation;
         zRotation = CameraZ.transform.rotation;
+        timer=0;
         // gtext.gameObject.SetActive(true);
         // gtext.gameObject.SetActive(true);
     }
@@ -119,6 +122,7 @@ public class RigidBodyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
         // check if player is on ground
         groundedCheckDistance = (GetComponent<BoxCollider>().bounds.extents.y) + bufferCheckDistance;
 
@@ -737,6 +741,9 @@ public class RigidBodyController : MonoBehaviour
     }
     public int get_statistic_rotation_time(){
         return rotation_times;
+    }
+    public float get_timer(){
+        return timer;
     }
 
 }
