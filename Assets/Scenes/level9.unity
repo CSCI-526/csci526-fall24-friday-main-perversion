@@ -582,6 +582,7 @@ GameObject:
   - component: {fileID: 69477970}
   - component: {fileID: 69477969}
   - component: {fileID: 69477968}
+  - component: {fileID: 69477972}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -664,19 +665,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 69477970}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 69477968}
-        m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
-        m_MethodName: OnMainMenuButtonClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &69477970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,6 +704,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69477966}
   m_CullTransparentMesh: 1
+--- !u!114 &69477972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69477966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ac4cc0702c04d46b6d7e90dcbf2599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 1775837747}
+  Screen: {fileID: 292825800}
+  endText: {fileID: 0}
+  timer: 0
+  nextButton: {fileID: 861986140}
+  livesButton: {fileID: 69477969}
 --- !u!1001 &71167839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6016,6 +6023,7 @@ MonoBehaviour:
   endText: {fileID: 1927445484}
   timer: 0
   nextButton: {fileID: 861986140}
+  livesButton: {fileID: 0}
 --- !u!4 &1702483713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2605249291871168508, guid: f8d40ff35a2d0f8449ab8a96173b32dd, type: 3}
