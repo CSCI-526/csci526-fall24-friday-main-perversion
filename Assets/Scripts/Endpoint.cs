@@ -136,6 +136,7 @@ public class NewBehaviourScript : MonoBehaviour
             isFailureProcessed = true;
 
             endText.SetText("Failure!" + "\n" + "Time:" + timer.ToString("0.00"));
+            nextButton.gameObject.SetActive(false);
             StartCoroutine(SendGameData(currentSceneName, te, times_rotations, times_respawn, 0));
         }
     }
