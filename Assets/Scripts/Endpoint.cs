@@ -57,14 +57,6 @@ public class NewBehaviourScript : MonoBehaviour
             {
                 UpdateLivesButtonText();
             }
-            else
-            {
-                Debug.LogError("TMP_Text component not found as a child of livesButton.");
-            }
-        }
-        else
-        {
-            Debug.LogError("livesButton is not assigned in the Inspector.");
         }
     }
 
@@ -117,10 +109,6 @@ public class NewBehaviourScript : MonoBehaviour
         if (livesText != null)
         {
             livesText.text = $"Lives: {remainingLives}";
-        }
-        else
-        {
-            Debug.LogError("TMP_Text not assigned or found in the livesButton hierarchy.");
         }
     }
 
