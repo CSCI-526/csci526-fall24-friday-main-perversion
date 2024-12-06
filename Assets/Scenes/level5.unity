@@ -2662,7 +2662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 994516403}
   Screen: {fileID: 944816156}
-  endText: {fileID: 0}
+  endText: {fileID: 2012984825}
   timer: 0
   nextButton: {fileID: 1049493787}
   livesButton: {fileID: 796193580}

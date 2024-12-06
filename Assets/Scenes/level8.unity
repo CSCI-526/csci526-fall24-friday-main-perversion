@@ -5005,7 +5005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 471773749}
   Screen: {fileID: 63720621}
-  endText: {fileID: 0}
+  endText: {fileID: 1940704022}
   timer: 0
   nextButton: {fileID: 1579173375}
   livesButton: {fileID: 1446045283}
