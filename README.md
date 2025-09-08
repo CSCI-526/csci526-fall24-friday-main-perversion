@@ -4,6 +4,8 @@
 
 🎮 **Play the Game Here**: [https://distr1ct9.github.io/PerversionGold/](https://distr1ct9.github.io/PerversionGold/)
 
+📄 **Game Design Document (GDD)**: [https://docs.google.com/document/d/1Q3tvTHk8SgLvbEjZhkDaI895mzI5wPUF](https://docs.google.com/document/d/1Q3tvTHk8SgLvbEjZhkDaI895mzI5wPUF)
+
 
 ---
 
