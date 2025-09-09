@@ -71,7 +71,7 @@
 
 - Jianbang Sun (Lead Developer, Unity Engineer)
 - Sai Vibhav Chirravuri (Product Manager)
-- Hongbin Dong (Level Designr, Unity Engineer)
+- Hongbin Dong (Level Designer, Unity Engineer)
 - Vasudha Padala (Stenographer, UI/UX Designer)
 - Yuchen yang (Data Analyzer, Stenographer)
 - Zhuoning Wu (Game Tester)
